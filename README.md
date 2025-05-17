@@ -65,6 +65,19 @@ EduWallet funciona como infraestrutura digital para um ecossistema de talentos, 
 
    * Aluno compartilha quantidades de méritos, não conteúdo.
    * API para instituições visualizarem talentos.
+   
+<br>
+<div align="center">
+<sub>Figura X - Arquitetura da Solução</sub>
+<br>
+<br>
+<img src="img/arquitetura-hackathon.png" alt='Arquitetura da solução' width="100%">
+<br>
+<br>
+<sup>Fonte: Material produzido pelos autores (2025)</sup>
+</div>
+<br>
+
 
 ### Tecnologias
 
