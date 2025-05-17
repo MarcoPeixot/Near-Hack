@@ -1,10 +1,14 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Wallet, CheckCircle, XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Web3 from "web3"
+import { contractABI } from "@/lib/contractABI"
+
+const CONTRACT_ADDRESS = "0xD4c77dF18E8c6cA4b6022089ef040e17523A447a"
 
 export default function GovernoValidaEscola() {
   const [walletAddress, setWalletAddress] = useState("")
@@ -20,52 +24,94 @@ export default function GovernoValidaEscola() {
   const [checkStatus, setCheckStatus] = useState<null | "authorized" | "unauthorized" | "error">(null)
   const [checkLoading, setCheckLoading] = useState(false)
 
-  // Simulação de validação (substitua por chamada real à API/contrato)
+  const [web3, setWeb3] = useState<any>(null)
+  const [contract, setContract] = useState<any>(null)
+  const [account, setAccount] = useState<string>("")
+  const [walletError, setWalletError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && (window as any).ethereum) {
+      const w3 = new Web3((window as any).ethereum)
+      setWeb3(w3)
+      ;(async () => {
+        try {
+          await (window as any).ethereum.request({ method: "eth_requestAccounts" })
+          const accounts = await w3.eth.getAccounts()
+          setAccount(accounts[0])
+          setContract(new w3.eth.Contract(contractABI as any, CONTRACT_ADDRESS))
+        } catch (err) {
+          setWalletError("Falha ao conectar à carteira.")
+        }
+      })()
+    } else {
+      setWalletError("MetaMask não detectado.")
+    }
+  }, [])
+
   const handleValidate = async () => {
     setLoading(true)
     setStatus(null)
-    // Simulação de delay e validação
-    setTimeout(() => {
-      if (walletAddress.startsWith("0x") && walletAddress.length > 10) {
-        setStatus("success")
-      } else {
+    setWalletError(null)
+    try {
+      if (!web3 || !contract || !account) {
+        setWalletError("Carteira não conectada.")
         setStatus("error")
+        setLoading(false)
+        return
       }
-      setLoading(false)
-    }, 1200)
+      const already = await contract.methods.isAuthorizedSchool(walletAddress).call()
+      if (already) {
+        setStatus("success")
+        setLoading(false)
+        return
+      }
+      await contract.methods.authorizeSchool(walletAddress).send({ from: account })
+      setStatus("success")
+    } catch (err) {
+      setStatus("error")
+      setWalletError("Erro ao validar escola.")
+    }
+    setLoading(false)
   }
 
-  // Simulação de revogação
   const handleRevoke = async () => {
     setRevokeLoading(true)
     setRevokeStatus(null)
-    setTimeout(() => {
-      if (revokeAddress.startsWith("0x") && revokeAddress.length > 10) {
-        setRevokeStatus("success")
-      } else {
+    setWalletError(null)
+    try {
+      if (!web3 || !contract || !account) {
+        setWalletError("Carteira não conectada.")
         setRevokeStatus("error")
+        setRevokeLoading(false)
+        return
       }
-      setRevokeLoading(false)
-    }, 1200)
+      await contract.methods.revokeSchool(revokeAddress).send({ from: account })
+      setRevokeStatus("success")
+    } catch (err) {
+      setRevokeStatus("error")
+      setWalletError("Erro ao revogar escola.")
+    }
+    setRevokeLoading(false)
   }
 
-  // Simulação de verificação
   const handleCheck = async () => {
     setCheckLoading(true)
     setCheckStatus(null)
-    setTimeout(() => {
-      if (checkAddress.startsWith("0x") && checkAddress.length > 10) {
-        // Simula que carteiras terminadas em 'a' são autorizadas
-        if (checkAddress.trim().toLowerCase().endsWith("a")) {
-          setCheckStatus("authorized")
-        } else {
-          setCheckStatus("unauthorized")
-        }
-      } else {
+    setWalletError(null)
+    try {
+      if (!web3 || !contract) {
+        setWalletError("Carteira não conectada.")
         setCheckStatus("error")
+        setCheckLoading(false)
+        return
       }
-      setCheckLoading(false)
-    }, 1200)
+      const result = await contract.methods.isAuthorizedSchool(checkAddress).call()
+      setCheckStatus(result ? "authorized" : "unauthorized")
+    } catch (err) {
+      setCheckStatus("error")
+      setWalletError("Erro ao verificar escola.")
+    }
+    setCheckLoading(false)
   }
 
   return (
@@ -75,11 +121,15 @@ export default function GovernoValidaEscola() {
         <p className="text-sky-700 max-w-2xl mx-auto">
           Como governo, valide o endereço de carteira de uma escola.
         </p>
+        {walletError && (
+          <div className="text-red-600 mt-2">{walletError}</div>
+        )}
+        {account && (
+          <div className="text-xs text-sky-700 mt-1">Carteira conectada: {account}</div>
+        )}
       </header>
 
-      {/* Container único para os cards */}
       <main className="flex-1 flex flex-row items-center justify-center p-4 md:p-8 gap-8 flex-wrap">
-        {/* Card 1: Validar Escola */}
         <Card className="w-full max-w-md shadow-lg border-sky-100">
           <CardHeader className="text-center">
             <CardTitle className="text-xl text-sky-900">Validar Escola</CardTitle>
@@ -140,7 +190,6 @@ export default function GovernoValidaEscola() {
           </CardContent>
         </Card>
 
-        {/* Card 2: Revogar Escola */}
         <Card className="w-full max-w-md shadow-lg border-sky-100">
           <CardHeader className="text-center">
             <CardTitle className="text-lg text-sky-900">Revogar Escola</CardTitle>
@@ -178,7 +227,6 @@ export default function GovernoValidaEscola() {
           </CardContent>
         </Card>
 
-        {/* Card 3: Verificar Escola */}
         <Card className="w-full max-w-md shadow-lg border-sky-100">
           <CardHeader className="text-center">
             <CardTitle className="text-lg text-sky-900">Verificar Escola</CardTitle>
