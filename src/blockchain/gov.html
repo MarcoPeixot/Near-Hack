@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Governo - Registro Escolar</title>
+</head>
+<body>
+  <h1>Governo: Gestão de Escolas</h1>
+
+  <label>Endereço da Escola:</label>
+  <input type="text" id="schoolAddress">
+  <button onclick="authorize()">Autorizar Escola</button>
+  <button onclick="revoke()">Revogar Escola</button>
+
+  <h2>Verificar autorização:</h2>
+  <input type="text" id="checkSchool">
+  <button onclick="checkAuthorization()">Verificar</button>
+  <p id="authStatus"></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+  <script type="module">
+    import { contractABI } from './ABI.js';
+    const contractAddress = "0xD4c77dF18E8c6cA4b6022089ef040e17523A447a";
+    const abi = contractABI;
+
+    let web3;
+    let contract;
+    let accounts;
+
+    window.onload = async () => {
+      if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+        await window.ethereum.enable();
+        accounts = await web3.eth.getAccounts();
+        contract = new web3.eth.Contract(abi, contractAddress);
+      } else {
+        alert("MetaMask não detectado");
+      }
+    };
+
+    async function authorize() {
+      const school = document.getElementById("schoolAddress").value;
+      const already = await contract.methods.isAuthorizedSchool(school).call();
+      if (already) {
+        alert("Essa escola já está autorizada.");
+        return;
+      }
+      await contract.methods.authorizeSchool(school).send({ from: accounts[0] });
+      alert("Escola autorizada!");
+    }
+
+    async function revoke() {
+      const school = document.getElementById("schoolAddress").value;
+      await contract.methods.revokeSchool(school).send({ from: accounts[0] });
+      alert("Escola revogada!");
+    }
+
+    async function checkAuthorization() {
+      const addr = document.getElementById("checkSchool").value;
+      const result = await contract.methods.isAuthorizedSchool(addr).call();
+      document.getElementById("authStatus").innerText = result ? "Autorizada ✅" : "Não autorizada ❌";
+    }
+
+    // Expose functions to global scope for HTML onclick
+    window.authorize = authorize;
+    window.revoke = revoke;
+    window.checkAuthorization = checkAuthorization;
+  </script>
+</body>
+</html>

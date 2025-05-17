@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Escola - Gestão de Alunos</title>
+</head>
+<body>
+  <h1>Escola: Afiliação de Alunos</h1>
+
+  <label>Carteira do Aluno:</label>
+  <input type="text" id="student">
+  <button onclick="affiliate()">Afiliar</button>
+  <button onclick="disaffiliate()">Desafiliar</button>
+
+  <h2>Verificar Escola de um Aluno</h2>
+  <input type="text" id="lookupStudent">
+  <button onclick="checkSchool()">Ver Escola</button>
+  <p id="studentSchool"></p>
+
+  <h2>Listar Alunos da Escola Conectada</h2>
+  <button onclick="listStudents()">Listar</button>
+  <ul id="studentList"></ul>
+
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+  <script type="module">
+    import { contractABI } from './ABI.js';
+    const contractAddress = "0xD4c77dF18E8c6cA4b6022089ef040e17523A447a";
+    const abi = contractABI;
+
+    let web3;
+    let contract;
+    let accounts;
+
+    window.onload = async () => {
+      if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+        await window.ethereum.enable();
+        accounts = await web3.eth.getAccounts();
+        contract = new web3.eth.Contract(abi, contractAddress);
+      } else {
+        alert("MetaMask não detectado");
+      }
+    };
+
+    async function affiliate() {
+      const student = document.getElementById("student").value;
+      await contract.methods.affiliateStudent(student).send({ from: accounts[0] });
+      alert("Aluno afiliado!");
+    }
+
+    async function disaffiliate() {
+      const student = document.getElementById("student").value;
+      await contract.methods.disaffiliateStudent(student).send({ from: accounts[0] });
+      alert("Aluno desafiliado!");
+    }
+
+    async function checkSchool() {
+      const student = document.getElementById("lookupStudent").value;
+      const school = await contract.methods.getSchoolOfStudent(student).call();
+      document.getElementById("studentSchool").innerText = school === "0x0000000000000000000000000000000000000000"
+        ? "Não afiliado"
+        : `Escola: ${school}`;
+    }
+
+    async function listStudents() {
+      const list = await contract.methods.getStudentsOfSchool(accounts[0]).call();
+      const ul = document.getElementById("studentList");
+      ul.innerHTML = "";
+      list.forEach((addr) => {
+        const li = document.createElement("li");
+        li.textContent = addr;
+        ul.appendChild(li);
+      });
+    }
+
+    // Expose functions to global scope for HTML onclick handlers
+    window.affiliate = affiliate;
+    window.disaffiliate = disaffiliate;
+    window.checkSchool = checkSchool;
+    window.listStudents = listStudents;
+  </script>
+</body>
+</html>
