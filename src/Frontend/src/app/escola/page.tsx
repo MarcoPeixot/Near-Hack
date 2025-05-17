@@ -2,10 +2,6 @@
 import { useState } from "react";
 
 export default function Escola() {
-  const url = process.env.NEXT_PUBLIC_LUMX_API_URL;
-  const token = process.env.NEXT_PUBLIC_LUMX_API_TOKEN;
-
-  console.log(url, token);
 
   const [cpf, setCpf] = useState("");
   const [step, setStep] = useState<"cpf" | "afiliado" | "carteira" | "criar-carteira">("cpf");
@@ -59,23 +55,16 @@ export default function Escola() {
     try {
       // Monta o body com os dados do formulário
       // Converte a data para o formato ISO completo
-      const birthDateISO = carteiraData.aniversario ? new Date(carteiraData.aniversario + 'T00:00:00.000Z').toISOString() : "";
+      const birthDateISO = carteiraData.aniversario || "";
       const body = JSON.stringify({
         type: "individual",
         name: carteiraData.nome,
         taxId: carteiraData.cpf,
         birthDate: birthDateISO,
-        country: carteiraData.pais,
+        country: "BRA",
         email: carteiraData.email,
       });
-      const response = await fetch(url!, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body,
-      });
+      const response = await fetch("/api/lumx/proxy", { method: "POST", headers: { "Content-Type": "application/json" }, body })
       if (!response.ok) throw new Error('Erro ao criar carteira');
       if (response.status !== 204) {
         await response.json(); // só tenta ler JSON se não for 204
@@ -134,7 +123,7 @@ export default function Escola() {
                 <input
                   type="text"
                   value={enderecoCarteira}
-                  onChange={(e) => setEnderecoCarteira(e.target.value)} 
+                  onChange={(e) => setEnderecoCarteira(e.target.value)}
                   required
                   className="w-full px-4 py-2 border border-sky-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
                   placeholder="Digite o endereço da carteira"
@@ -184,18 +173,17 @@ export default function Escola() {
                   className="w-full px-4 py-2 border border-sky-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
                 />
               </div>
-              <div>
+                <div>
                 <label className="block text-sky-900 font-medium mb-1">País</label>
                 <input
                   type="text"
                   name="pais"
                   value={carteiraData.pais}
-                  onChange={handleCarteiraChange}
-                  required
-                  className="w-full px-4 py-2 border border-sky-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
-                  placeholder="Brasil"
+                  readOnly
+                  className="w-full px-4 py-2 border border-sky-100 bg-sky-50 rounded-lg text-gray-500"
+                  placeholder="BRA"
                 />
-              </div>
+                </div>
               <div>
                 <label className="block text-sky-900 font-medium mb-1">Email</label>
                 <input
