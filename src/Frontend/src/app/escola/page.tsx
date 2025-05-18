@@ -24,32 +24,32 @@ export default function EscolherEscola() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-sky-50 to-white">
-      <form onSubmit={handleBuscarEscola} className="space-y-4 bg-white p-8 rounded-xl shadow-lg border border-sky-100">
-        <label className="block text-sky-900 font-medium mb-1">Digite o ID da escola</label>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-950 transition-colors duration-300">
+      <form onSubmit={handleBuscarEscola} className="space-y-4 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg border border-sky-100 dark:border-gray-800">
+        <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">Digite o ID da escola</label>
         <input
           type="number"
           value={escolaId}
           onChange={e => setEscolaId(e.target.value)}
           required
-          className="w-full px-4 py-2 border border-sky-200 rounded-lg"
+          className="w-full px-4 py-2 border border-sky-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sky-900 dark:text-sky-100 placeholder:text-sky-400 dark:placeholder:text-gray-400"
           placeholder="ID da escola"
         />
         <button
           type="submit"
-          className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-lg"
+          className="w-full bg-sky-600 hover:bg-sky-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors"
         >
           Buscar escola
         </button>
       </form>
       {escola && (
-        <div className="mt-6 bg-sky-50 p-4 rounded-lg shadow">
-          <div className="font-bold text-sky-900">Escola encontrada:</div>
-          <div>Nome: {escola.nome}</div>
-          <div>ID: {escola.id}</div>
+        <div className="mt-6 bg-sky-50 dark:bg-gray-800 p-4 rounded-lg shadow border border-sky-100 dark:border-gray-700">
+          <div className="font-bold text-sky-900 dark:text-sky-100">Escola encontrada:</div>
+          <div className="text-sky-900 dark:text-sky-100">Nome: {escola.nome}</div>
+          <div className="text-sky-900 dark:text-sky-100">ID: {escola.id}</div>
           <button
             onClick={handleEntrar}
-            className="mt-4 bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg"
+            className="mt-4 bg-sky-600 hover:bg-sky-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
           >
             Entrar
           </button>

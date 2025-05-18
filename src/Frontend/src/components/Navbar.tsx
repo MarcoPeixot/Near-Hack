@@ -31,12 +31,14 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <div className="relative w-10 h-10">
-            <Image src="/hackathon-hacks.png" alt="Edu Wallet Logo" fill className="object-contain" priority />
-          </div>
-          <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-500 dark:to-blue-300 bg-clip-text text-transparent">
-            Edu Wallet
-          </h1>
+          <Link href="/" className="flex items-center gap-3">
+            <div className="relative w-10 h-10">
+              <Image src="/hackathon-hacks.png" alt="Edu Wallet Logo" fill className="object-contain" priority />
+            </div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-500 dark:to-blue-300 bg-clip-text text-transparent">
+              Edu Wallet
+            </h1>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}

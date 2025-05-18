@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
 import { Menu, X, Moon, Sun, ChevronRight, Wallet, Shield, Award, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Navbar from "@/components/Navbar"
+import Footer from "@/components/Footer"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -29,112 +31,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-      {/* NavBar */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10">
-              <Image src="/hackathon-hacks.png" alt="Edu Wallet Logo" fill className="object-contain" priority />
-            </div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-500 dark:to-blue-300 bg-clip-text text-transparent">
-              Edu Wallet
-            </h1>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link
-              href="#features"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              Funcionalidades
-            </Link>
-            <Link
-              href="#team"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              Quem Somos
-            </Link>
-            <Link
-              href="#contact"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              Contato
-            </Link>
-          </nav>
-
-          <div className="flex items-center gap-4">
-            {/* Theme Toggle Button */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={toggleMenu}
-              className="md:hidden p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-
-            {/* Login Button (Desktop) */}
-            <Link href="/login" className="hidden md:block">
-              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-full px-6">
-                Entrar
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-gray-200 dark:border-gray-800"
-            >
-              <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-                <Link
-                  href="#features"
-                  className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Funcionalidades
-                </Link>
-                <Link
-                  href="#team"
-                  className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Quem Somos
-                </Link>
-                <Link
-                  href="#contact"
-                  className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Contato
-                </Link>
-                <Link
-                  href="/login"
-                  className="py-2 text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-full"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Entrar
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
-
+      <Navbar />
       {/* Hero Section */}
       <section className="pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="container mx-auto px-4">
@@ -166,7 +63,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Features Section */}
       <section id="features" className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
@@ -187,7 +83,6 @@ export default function Home() {
               Uma infraestrutura descentralizada para registrar e rastrear o histórico acadêmico de alunos brasileiros
             </p>
           </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {features.map((feature, index) => (
               <motion.div
@@ -208,7 +103,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Team Section */}
       <section id="team" className="py-20">
         <div className="container mx-auto px-4">
@@ -229,7 +123,6 @@ export default function Home() {
               Conheça a equipe por trás do Edu Wallet
             </p>
           </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
             {teamMembers.map((member, index) => (
               <motion.div
@@ -254,7 +147,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
@@ -281,43 +173,8 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
       {/* Footer */}
-      <footer className="py-12 border-t border-gray-200 dark:border-gray-800">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center gap-3 mb-6 md:mb-0">
-              <div className="relative w-8 h-8">
-                <Image src="/hackathon-hacks.png" alt="Edu Wallet Logo" fill className="object-contain" />
-              </div>
-              <span className="font-medium">Edu Wallet</span>
-            </div>
-            <div className="flex gap-8 mb-6 md:mb-0">
-              <Link
-                href="#features"
-                className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors"
-              >
-                Funcionalidades
-              </Link>
-              <Link
-                href="#team"
-                className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors"
-              >
-                Quem Somos
-              </Link>
-              <Link
-                href="#contact"
-                className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors"
-              >
-                Contato
-              </Link>
-            </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
-              © {new Date().getFullYear()} Edu Wallet • Todos os direitos reservados
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

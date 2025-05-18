@@ -148,33 +148,33 @@ export default function Escola() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-50 to-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-950 transition-colors duration-300">
       <header className="py-6 px-4 md:px-6 text-center">
-        <h1 className="text-2xl md:text-3xl font-bold text-sky-900 mb-2">Escola</h1>
-        <p className="text-sky-700 max-w-2xl mx-auto">
+        <h1 className="text-2xl md:text-3xl font-bold text-sky-900 dark:text-sky-100 mb-2">Escola</h1>
+        <p className="text-sky-700 dark:text-sky-300 max-w-2xl mx-auto">
           Afilie, cadastre ou rematricule alunos digitando o CPF.
         </p>
-        {escolaId && <div className="text-sky-800 mt-2">ID da escola em uso: <b>{escolaId}</b></div>}
+        {escolaId && <div className="text-sky-800 dark:text-sky-200 mt-2">ID da escola em uso: <b>{escolaId}</b></div>}
       </header>
       <main className="flex-1 flex items-center justify-center p-4 md:p-8">
-        <div className="w-full max-w-md bg-white rounded-xl shadow-lg border border-sky-100 p-8 animate-fadeIn">
+        <div className="w-full max-w-md bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-sky-100 dark:border-gray-800 p-8 animate-fadeIn">
           {step === "cpf" && (
             <form onSubmit={handleCpfSubmit} className="space-y-6">
               <div>
-                <label className="block text-sky-900 font-medium mb-2">CPF do aluno</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-2">CPF do aluno</label>
                 <input
                   type="text"
                   value={cpf}
                   onChange={(e) => setCpf(e.target.value)}
                   required
                   maxLength={11}
-                  className="w-full px-4 py-2 border border-sky-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
+                  className="w-full px-4 py-2 border border-sky-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sky-900 dark:text-sky-100 placeholder:text-sky-400 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500"
                   placeholder="Digite o CPF"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-lg transition-colors"
+                className="w-full bg-sky-600 hover:bg-sky-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors"
               >
                 Buscar
               </button>
@@ -182,80 +182,80 @@ export default function Escola() {
           )}
           {step === "criar-aluno" && (
             <form className="space-y-4 mt-4" onSubmit={handleCriarAlunoSubmit}>
-              <h3 className="text-lg font-bold text-sky-900 mb-2">Cadastrar novo aluno</h3>
+              <h3 className="text-lg font-bold text-sky-900 dark:text-sky-100 mb-2">Cadastrar novo aluno</h3>
               <div>
-                <label className="block text-sky-900 font-medium mb-1">Nome</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">Nome</label>
                 <input
                   type="text"
                   name="nome"
                   value={carteiraData.nome}
                   onChange={handleCarteiraChange}
                   required
-                  className="w-full px-4 py-2 border border-sky-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
+                  className="w-full px-4 py-2 border border-sky-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sky-900 dark:text-sky-100 placeholder:text-sky-400 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500"
                   placeholder="Nome completo"
                 />
               </div>
 
               <div>
-                <label className="block text-sky-900 font-medium mb-1">CPF</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">CPF</label>
                 <input
                   type="text"
                   name="cpf"
                   value={carteiraData.cpf}
                   readOnly
-                  className="w-full px-4 py-2 border border-sky-100 bg-sky-50 rounded-lg text-gray-500"
+                  className="w-full px-4 py-2 border border-sky-100 dark:border-gray-700 bg-sky-50 dark:bg-gray-800 rounded-lg text-gray-500 dark:text-gray-400"
                 />
               </div>
               <div>
-                <label className="block text-sky-900 font-medium mb-1">Data de aniversário</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">Data de aniversário</label>
                 <input
                   type="date"
                   name="aniversario"
                   value={carteiraData.aniversario}
                   onChange={handleCarteiraChange}
                   required
-                  className="w-full px-4 py-2 border border-sky-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
+                  className="w-full px-4 py-2 border border-sky-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sky-900 dark:text-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-sky-900 font-medium mb-1">País</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">País</label>
                 <input
                   type="text"
                   name="pais"
                   value={carteiraData.pais}
                   readOnly
-                  className="w-full px-4 py-2 border border-sky-100 bg-sky-50 rounded-lg text-gray-500"
+                  className="w-full px-4 py-2 border border-sky-100 dark:border-gray-700 bg-sky-50 dark:bg-gray-800 rounded-lg text-gray-500 dark:text-gray-400"
                   placeholder="BRA"
                 />
               </div>
 
               <div>
-                <label className="block text-sky-900 font-medium mb-1">Email</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">Email</label>
                 <input
                   type="email"
                   name="email"
                   value={carteiraData.email}
                   onChange={handleCarteiraChange}
                   required
-                  className="w-full px-4 py-2 border border-sky-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
+                  className="w-full px-4 py-2 border border-sky-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sky-900 dark:text-sky-100 placeholder:text-sky-400 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500"
                   placeholder="email@exemplo.com"
                 />
               </div>
               <div>
-                <label className="block text-sky-900 font-medium mb-1">ID da Escola</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">ID da Escola</label>
                 <input
                   type="number"
                   value={escolaId ?? ""}
                   onChange={e => setEscolaId(Number(e.target.value))}
                   required
-                  className="w-full px-4 py-2 border border-sky-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
+                  className="w-full px-4 py-2 border border-sky-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sky-900 dark:text-sky-100 placeholder:text-sky-400 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500"
                   placeholder="Digite o ID da escola"
                 />
               </div>
               
               <button
                 type="submit"
-                className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-lg transition-colors"
+                className="w-full bg-sky-600 hover:bg-sky-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors"
               >
                 Cadastrar aluno
               </button>
@@ -263,11 +263,11 @@ export default function Escola() {
           )}
           {step === "afiliar-escola" && (
             <form className="space-y-4 mt-4" onSubmit={handleAfiliarEscolaSubmit}>
-              <h3 className="text-lg font-bold text-sky-900 mb-2">Afiliar aluno à escola</h3>
-              <div className="mb-2">Aluno: <b>{carteiraData.nome}</b> (CPF: {carteiraData.cpf})</div>
+              <h3 className="text-lg font-bold text-sky-900 dark:text-sky-100 mb-2">Afiliar aluno à escola</h3>
+              <div className="mb-2 text-sky-900 dark:text-sky-100">Aluno: <b>{carteiraData.nome}</b> (CPF: {carteiraData.cpf})</div>
               <button
                 type="submit"
-                className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-lg transition-colors"
+                className="w-full bg-sky-600 hover:bg-sky-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors"
               >
                 Afiliar aluno
               </button>
@@ -275,45 +275,45 @@ export default function Escola() {
           )}
           {step === "rematricula" && (
             <form className="space-y-4 mt-4" onSubmit={handleRematriculaSubmit}>
-              <h3 className="text-lg font-bold text-sky-900 mb-2">Rematrícula / Atualizar dados</h3>
+              <h3 className="text-lg font-bold text-sky-900 dark:text-sky-100 mb-2">Rematrícula / Atualizar dados</h3>
               <div>
-                <label className="block text-sky-900 font-medium mb-1">Nome</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">Nome</label>
                 <input
                   type="text"
                   name="nome"
                   value={carteiraData.nome}
                   onChange={handleCarteiraChange}
                   required
-                  className="w-full px-4 py-2 border border-sky-200 rounded-lg"
+                  className="w-full px-4 py-2 border border-sky-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sky-900 dark:text-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500"
                   placeholder="Nome completo"
                 />
               </div>
               <div>
-                <label className="block text-sky-900 font-medium mb-1">Email</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">Email</label>
                 <input
                   type="email"
                   name="email"
                   value={carteiraData.email}
                   onChange={handleCarteiraChange}
                   required
-                  className="w-full px-4 py-2 border border-sky-200 rounded-lg"
+                  className="w-full px-4 py-2 border border-sky-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sky-900 dark:text-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500"
                   placeholder="email@exemplo.com"
                 />
               </div>
               <div>
-                <label className="block text-sky-900 font-medium mb-1">Data de aniversário</label>
+                <label className="block text-sky-900 dark:text-sky-100 font-medium mb-1">Data de aniversário</label>
                 <input
                   type="date"
                   name="aniversario"
                   value={carteiraData.aniversario}
                   onChange={handleCarteiraChange}
                   required
-                  className="w-full px-4 py-2 border border-sky-200 rounded-lg"
+                  className="w-full px-4 py-2 border border-sky-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-sky-900 dark:text-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-lg"
+                className="w-full bg-sky-600 hover:bg-sky-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors"
               >
                 Atualizar dados
               </button>
