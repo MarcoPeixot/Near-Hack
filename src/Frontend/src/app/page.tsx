@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
-import { Menu, X, Moon, Sun, ChevronRight, Wallet, Shield, Award, Users } from "lucide-react"
+import { Menu, X, Moon, Sun, ChevronRight, Wallet, Shield, Award, Users, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Home() {
@@ -150,10 +150,13 @@ export default function Home() {
                 Visibilidade e oportunidade para todos os estudantes através da tecnologia blockchain
               </p>
               <div className="flex flex-wrap justify-center gap-4">
+                <Link href="/login" className="hidden md:block">
                 <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-full px-8 py-6 text-lg font-medium flex items-center gap-2">
                   <span>Comece Agora</span>
                   <Wallet size={20} />
                 </Button>
+                </Link>
+
                 <Button
                   variant="outline"
                   className="border-gray-300 dark:border-gray-700 hover:border-blue-600 dark:hover:border-blue-400 rounded-full px-8 py-6 text-lg font-medium flex items-center gap-2"
@@ -238,17 +241,34 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg text-center"
+                className="bg-white/80 dark:bg-blue-900/20 backdrop-blur-sm rounded-2xl p-6 shadow-lg text-center border border-blue-100 dark:border-blue-800/30 group hover:shadow-xl transition-all"
               >
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
-                  {/* Placeholder for team member photo */}
-                  <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
-                    <Users size={40} />
-                  </div>
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 border-4 border-white dark:border-blue-700 shadow-md group-hover:shadow-lg transition-all">
+                  {member.image ? (
+                    <Image
+                      src={member.image || "/placeholder.svg"}
+                      alt={member.name}
+                      width={128}
+                      height={128}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-blue-400 dark:text-blue-500">
+                      <Users size={40} />
+                    </div>
+                  )}
                 </div>
                 <h4 className="text-lg font-semibold mb-1">{member.name}</h4>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">{member.role}</p>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">{member.bio}</p>
+                <p className="text-blue-600 dark:text-blue-300 text-sm mb-3">{member.role}</p>
+                <a
+                  href={member.bio}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-gray-500 dark:text-blue-400 text-sm hover:text-blue-600 dark:hover:text-blue-300 transition-colors"
+                >
+                  <Github size={16} />
+                  <span>GitHub</span>
+                </a>
               </motion.div>
             ))}
           </div>
@@ -345,23 +365,28 @@ const features = [
 
 const teamMembers = [
   {
-    name: "Ana Silva",
-    role: "CEO & Fundadora",
-    bio: "Especialista em blockchain e educação digital.",
+    name: "Giovanna Britto",
+    role: "Web3 Developer",
+    bio: "https://github.com/giovanna-britto",
+    image: "/giovanna.jpeg",
   },
   {
-    name: "Carlos Mendes",
-    role: "CTO",
-    bio: "Desenvolvedor blockchain com foco em soluções educacionais.",
+    name: "Matheus Ribeiro",
+    role: "Web3 Developer",
+    bio: "https://github.com/omatheu",
+    image: "/matheus.jpeg",
   },
   {
-    name: "Juliana Costa",
-    role: "Designer UX/UI",
-    bio: "Criadora de experiências digitais centradas no usuário.",
+    name: "Marco Ruas",
+    role: "Full Stack Developer",
+    bio: "https://github.com/MarcoPeixot",
+    image: "/marco.jpeg",
   },
   {
-    name: "Rafael Santos",
-    role: "Especialista em Educação",
-    bio: "Pedagogo com experiência em tecnologias educacionais.",
+    name: "Thiago Volcati",
+    role: "Vagabundo Developer",
+    bio: "https://github.com/tvolcati",
+    image: "/thiago.jpeg",
   },
 ]
+
