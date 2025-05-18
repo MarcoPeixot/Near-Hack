@@ -27,31 +27,31 @@ export default function LoginInstituicaoMerito() {
   }
 
   return (
-    <div className="min-h-screen grid grid-rows-[auto_1fr_auto] bg-gradient-to-b from-sky-50 to-white">
-      <header className="py-6 px-4 md:px-6 text-center row-start-1">
-        <h1 className="text-2xl md:text-3xl font-bold text-sky-900 mb-2">Passaporte Acadêmico On-Chain</h1>
-        <p className="text-sky-700 max-w-2xl mx-auto">Portal da Instituição de Mérito</p>
+    <div className="min-h-screen grid grid-rows-[auto_1fr_auto] bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-950 transition-colors duration-300">
+      <header className="py-6 px-4 md:px-6 text-center row-start-1 bg-white dark:bg-gray-900">
+        <h1 className="text-2xl md:text-3xl font-bold text-sky-900 dark:text-sky-100 mb-2">Passaporte Acadêmico On-Chain</h1>
+        <p className="text-sky-700 dark:text-sky-300 max-w-2xl mx-auto">Portal da Instituição de Mérito</p>
       </header>
 
       <main className="flex items-center justify-center p-4 md:p-8 row-start-2">
-        <Card className="w-full max-w-md shadow-lg border-sky-100">
+        <Card className="w-full max-w-md shadow-lg border-sky-100 dark:bg-gray-900 dark:border-gray-800">
           <CardHeader className="text-center">
-            <div className="mx-auto bg-sky-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-              <Award className="h-8 w-8 text-sky-600" />
+            <div className="mx-auto bg-sky-100 dark:bg-blue-900/30 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <Award className="h-8 w-8 text-sky-600 dark:text-blue-400" />
             </div>
-            <CardTitle className="text-xl text-sky-900">Acesso Institucional</CardTitle>
-            <CardDescription>Entre com suas credenciais para acessar o portal</CardDescription>
+            <CardTitle className="text-xl text-sky-900 dark:text-sky-100">Acesso Institucional</CardTitle>
+            <CardDescription className="dark:text-gray-300">Entre com suas credenciais para acessar o portal</CardDescription>
           </CardHeader>
           <form onSubmit={handleLogin}>
             <CardContent className="space-y-4">
               {error && (
-                <div className="p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded">
+                <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 text-red-600 dark:text-red-300 text-sm rounded">
                   {error}
                 </div>
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email institucional</Label>
+                <Label htmlFor="email" className="dark:text-gray-200">Email institucional</Label>
                 <Input
                   id="email"
                   type="email"
@@ -59,13 +59,14 @@ export default function LoginInstituicaoMerito() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  className="dark:bg-gray-800 dark:text-sky-100 dark:border-gray-700"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Senha</Label>
-                  <Link href="#" className="text-xs text-sky-600 hover:text-sky-800">
+                  <Label htmlFor="password" className="dark:text-gray-200">Senha</Label>
+                  <Link href="#" className="text-xs text-sky-600 hover:text-sky-800 dark:text-blue-300 dark:hover:text-blue-400">
                     Esqueceu a senha?
                   </Link>
                 </div>
@@ -76,14 +77,20 @@ export default function LoginInstituicaoMerito() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    className="dark:bg-gray-800 dark:text-sky-100 dark:border-gray-700"
                   />
-                  <Lock className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
+                  <Lock className="absolute right-3 top-2.5 h-4 w-4 text-gray-400 dark:text-gray-500" />
                 </div>
               </div>
             </CardContent>
 
             <CardFooter className="flex flex-col space-y-4">
-              <Button type="submit" className="w-full bg-sky-600 hover:bg-sky-700" disabled={isLoading}>
+              {/* Alteração aqui: adicionado mt-4 para margem superior */}
+              <Button 
+                type="submit" 
+                className="w-full bg-sky-600 hover:bg-sky-700 dark:bg-blue-600 dark:hover:bg-blue-700 mt-4" 
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
                     <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -96,8 +103,8 @@ export default function LoginInstituicaoMerito() {
                   </span>
                 )}
               </Button>
-              <div className="text-center text-sm text-gray-500">
-                <Link href="/" className="text-sky-600 hover:text-sky-800">
+              <div className="text-center text-sm text-gray-500 dark:text-gray-300">
+                <Link href="/" className="text-sky-600 hover:text-sky-800 dark:text-blue-300 dark:hover:text-blue-400">
                   Voltar para a página inicial
                 </Link>
               </div>
@@ -106,9 +113,7 @@ export default function LoginInstituicaoMerito() {
         </Card>
       </main>
 
-      <footer className="py-4 px-4 text-center text-sm text-sky-600 row-start-3">
-        <p>© {new Date().getFullYear()} Passaporte Acadêmico On-Chain • Todos os direitos reservados</p>
-      </footer>
+     
     </div>
   )
 }

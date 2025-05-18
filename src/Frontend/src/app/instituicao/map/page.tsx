@@ -338,33 +338,24 @@ export default function MapaPage() {
     : null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-50 to-white">
-      <header className="py-4 px-4 md:px-6 border-b">
-        <div className="container mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center text-sky-600 hover:text-sky-700 transition-colors">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            <span>Voltar</span>
-          </Link>
-          <h1 className="text-xl font-bold text-sky-900">Mapa de Instituições</h1>
-          <div className="w-24"></div>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-950 transition-colors duration-300">
+      
 
       <main className="flex-1 container mx-auto p-4 md:p-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Painel lateral com filtros e lista */}
           <div className="lg:col-span-1 space-y-4">
-            <Card>
+            <Card className="dark:bg-gray-900 dark:border-gray-800">
               <CardContent className="p-4 space-y-4">
                 <div className="space-y-2">
-                  <h2 className="font-medium text-sky-900">Filtros</h2>
+                  <h2 className="font-medium text-sky-900 dark:text-sky-100">Filtros</h2>
                   <div className="flex gap-2">
                     <div className="flex-1">
                       <Select value={filtroTipo || ""} onValueChange={(value) => setFiltroTipo(value || null)}>
-                        <SelectTrigger>
+                        <SelectTrigger className="dark:bg-gray-800 dark:text-sky-100">
                           <SelectValue placeholder="Tipo de instituição" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="dark:bg-gray-900 dark:text-sky-100">
                           <SelectItem value="todos">Todos os tipos</SelectItem>
                           <SelectItem value="escola">Escolas</SelectItem>
                           <SelectItem value="merito">Instituições de Mérito</SelectItem>
@@ -374,11 +365,11 @@ export default function MapaPage() {
                       </Select>
                     </div>
                     <div className="relative flex-1">
-                      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
+                      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400 dark:text-gray-500" />
                       <Input
                         type="text"
                         placeholder="Buscar..."
-                        className="pl-8"
+                        className="pl-8 dark:bg-gray-800 dark:text-sky-100"
                         value={termoBusca}
                         onChange={(e) => setTermoBusca(e.target.value)}
                       />
@@ -391,56 +382,56 @@ export default function MapaPage() {
                       type="checkbox"
                       checked={apenasComTalentos}
                       onChange={() => setApenasComTalentos((v) => !v)}
-                      className="accent-sky-600"
+                      className="accent-sky-600 dark:accent-blue-500"
                     />
-                    <label htmlFor="talentos" className="text-sm text-sky-900 cursor-pointer">
+                    <label htmlFor="talentos" className="text-sm text-sky-900 dark:text-sky-100 cursor-pointer">
                       Só escolas com talentos (NFT)
                     </label>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <h2 className="font-medium text-sky-900">Instituições ({instituicoesFiltradas.length})</h2>
+                  <h2 className="font-medium text-sky-900 dark:text-sky-100">Instituições ({instituicoesFiltradas.length})</h2>
                   <div className="space-y-2 max-h-[300px] overflow-y-auto pr-2">
                     {instituicoesFiltradas.length > 0 ? (
                       instituicoesFiltradas.map((inst) => (
                         <div
                           key={inst.id}
                           className={`p-3 rounded-lg border cursor-pointer transition-colors ${instituicaoSelecionada === inst.id
-                            ? "bg-sky-100 border-sky-200"
-                            : "bg-white hover:bg-gray-50 border-gray-100"
+                            ? "bg-sky-100 dark:bg-blue-900/30 border-sky-200 dark:border-blue-700"
+                            : "bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700"
                             }`}
                           onClick={() => setInstituicaoSelecionada(inst.id)}
                         >
                           <div className="flex items-start gap-2">
                             <div className="mt-0.5">{getTipoIcon(inst.tipo)}</div>
                             <div className="flex-1">
-                              <h3 className="font-medium text-sky-900">{inst.nome}</h3>
-                              <p className="text-sm text-gray-600">{inst.endereco}</p>
-                              <p className="text-xs text-gray-500">
+                              <h3 className="font-medium text-sky-900 dark:text-sky-100">{inst.nome}</h3>
+                              <p className="text-sm text-gray-600 dark:text-gray-300">{inst.endereco}</p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
                                 {inst.cidade}, {inst.estado}
                               </p>
                               {/* Exibindo email e telefone */}
                               {inst.email && (
-                                <p className="text-xs flex items-center gap-1 mt-1 text-sky-600">
+                                <p className="text-xs flex items-center gap-1 mt-1 text-sky-600 dark:text-blue-300">
                                   <Mail className="h-3 w-3" />
                                   {inst.email}
                                 </p>
                               )}
                               {inst.telefone && (
-                                <p className="text-xs flex items-center gap-1 text-sky-600">
+                                <p className="text-xs flex items-center gap-1 text-sky-600 dark:text-blue-300">
                                   <Phone className="h-3 w-3" />
                                   {inst.telefone}
                                 </p>
                               )}
                               <div className="mt-1 flex gap-2 items-center">
-                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-sky-100 text-sky-800">
+                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-sky-100 dark:bg-blue-900/30 text-sky-800 dark:text-blue-200">
                                   {getTipoNome(inst.tipo)}
                                 </span>
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  className="text-xs px-2 py-0.5 h-6"
+                                  className="text-xs px-2 py-0.5 h-6 dark:bg-gray-800 dark:text-sky-100 dark:border-gray-700"
                                   onClick={(e) => {
                                     e.stopPropagation()
                                     handleAbrirDetalhesBox(inst.id)
@@ -454,11 +445,11 @@ export default function MapaPage() {
                         </div>
                       ))
                     ) : (
-                      <div className="text-center py-8 text-gray-500">
+                      <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                         <p>Nenhuma instituição encontrada com os filtros atuais.</p>
                         <Button
                           variant="link"
-                          className="mt-2 text-sky-600"
+                          className="mt-2 text-sky-600 dark:text-blue-300"
                           onClick={() => {
                             setFiltroTipo(null)
                             setTermoBusca("")
@@ -475,14 +466,14 @@ export default function MapaPage() {
             </Card>
 
             {/* Dashboard de detalhes - agora expansível e maior */}
-            <Card>
+            <Card className="dark:bg-gray-900 dark:border-gray-800">
               <CardContent className={`p-4 transition-all duration-300 ${dashboardExpandido ? "h-auto" : "h-16 overflow-hidden"}`}>
                 <div className="flex items-center justify-between mb-2">
-                  <h2 className="font-semibold text-sky-900">Dashboard da Escola</h2>
+                  <h2 className="font-semibold text-sky-900 dark:text-sky-100">Dashboard da Escola</h2>
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="ml-2"
+                    className="ml-2 dark:text-sky-100"
                     onClick={() => setDashboardExpandido((v) => !v)}
                     aria-label={dashboardExpandido ? "Recolher dashboard" : "Expandir dashboard"}
                   >
@@ -491,39 +482,39 @@ export default function MapaPage() {
                 </div>
                 {detalhesEscola && instituicaoSelecionada ? (
                   <>
-                    <p><b>Quantidade de alunos:</b> {detalhesEscola.quantidadeAlunos}</p>
-                    <p><b>Alunos com honras ao mérito:</b> {detalhesEscola.alunosHonra}</p>
-                    <p><b>Endereço (banco de dados):</b> {detalhesEscola.enderecoBanco}</p>
+                    <p className="dark:text-gray-200"><b>Quantidade de alunos:</b> {detalhesEscola.quantidadeAlunos}</p>
+                    <p className="dark:text-gray-200"><b>Alunos com honras ao mérito:</b> {detalhesEscola.alunosHonra}</p>
+                    <p className="dark:text-gray-200"><b>Endereço (banco de dados):</b> {detalhesEscola.enderecoBanco}</p>
 
                     {/* Informações de contato */}
                     {detalhesEscola.email && (
-                      <p className="flex items-center gap-1 mt-2 text-sky-700">
+                      <p className="flex items-center gap-1 mt-2 text-sky-700 dark:text-blue-300">
                         <Mail className="h-4 w-4" />
                         <b>Email:</b> {detalhesEscola.email}
                       </p>
                     )}
                     {detalhesEscola.telefone && (
-                      <p className="flex items-center gap-1 text-sky-700">
+                      <p className="flex items-center gap-1 text-sky-700 dark:text-blue-300">
                         <Phone className="h-4 w-4" />
                         <b>Telefone:</b> {detalhesEscola.telefone}
                       </p>
                     )}
 
                     <div className="mt-2">
-                      <b>Alunos com mais honras ao mérito:</b>
+                      <b className="dark:text-gray-200">Alunos com mais honras ao mérito:</b>
                       {detalhesEscola.alunosMaisHonra.length > 0 ? (
-                        <ul className="list-disc ml-5">
+                        <ul className="list-disc ml-5 dark:text-gray-200">
                           {detalhesEscola.alunosMaisHonra.map((aluno: any, idx: number) => (
                             <li key={idx}>{aluno.nome} ({aluno.honras} honras)</li>
                           ))}
                         </ul>
                       ) : (
-                        <span className="text-gray-500">Nenhum talento registrado nesta escola.</span>
+                        <span className="text-gray-500 dark:text-gray-400">Nenhum talento registrado nesta escola.</span>
                       )}
                     </div>
                   </>
                 ) : (
-                  <p className="text-gray-500">Selecione uma escola para ver o dashboard.</p>
+                  <p className="text-gray-500 dark:text-gray-400">Selecione uma escola para ver o dashboard.</p>
                 )}
               </CardContent>
             </Card>
@@ -531,7 +522,7 @@ export default function MapaPage() {
 
           {/* Mapa */}
           <div className="lg:col-span-2">
-            <Card className="h-full">
+            <Card className="h-full dark:bg-gray-900 dark:border-gray-800">
               <CardContent className="p-0 h-[600px]">
                 <MapComponent
                   instituicoes={instituicoesFiltradas}
@@ -548,9 +539,7 @@ export default function MapaPage() {
         </div>
       </main>
 
-      <footer className="py-4 px-4 text-center text-sm text-sky-600 border-t">
-        <p>© {new Date().getFullYear()} Passaporte Acadêmico On-Chain • Todos os direitos reservados</p>
-      </footer>
+      
     </div>
   )
 }

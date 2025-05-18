@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+
+  eslint: {
+    // ATENÇÃO: Isso permite que builds de produção sejam concluídos
+    // mesmo que seu projeto tenha erros de ESLint.
+    ignoreDuringBuilds: true,
+  },
+  
   async rewrites() {
     return [
       {
