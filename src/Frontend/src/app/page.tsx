@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 import { ChevronRight, Wallet, Shield, Award, Users, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/Navbar"
+import { EduAssist } from "@/components/assistant"
 // Footer não foi fornecido, então vou comentar a importação e uso
 // import Footer from "@/components/Footer"
 
@@ -200,6 +201,8 @@ export default function Home() {
       </section>
       
       {/* <Footer /> */}
+
+      <EduAssist />
     </div>
   )
 }
