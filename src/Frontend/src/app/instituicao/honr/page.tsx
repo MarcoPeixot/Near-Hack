@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 type Aluno = {
+  id: number; // ID do aluno é crucial
   nome: string
   cpf: string
   email: string
@@ -44,7 +45,10 @@ const TODOS_PREMIOS: Premio[] = [
   { id: 13, nome: "Olimpíada de Geografia", descricao: "Olimpíada Brasileira de Geografia" },
   { id: 14, nome: "Olimpíada de Filosofia", descricao: "Olimpíada Brasileira de Filosofia" },
   { id: 15, nome: "Olimpíada de Artes", descricao: "Olimpíada Brasileira de Artes" },
-]
+];
+
+// URL do nosso proxy Next.js para mintar o NFT
+const PROXY_NFT_MINT_API_URL = "/api/token";
 
 export default function ConsultaAlunoHonr() {
   const [cpf, setCpf] = useState("")
@@ -65,8 +69,11 @@ export default function ConsultaAlunoHonr() {
     setPremioSelecionado(null)
     setLoading(true)
     try {
-      const res = await fetch(`/api/aluno?cpf=${cpf}`)
-      if (!res.ok) throw new Error("Erro ao buscar aluno")
+      const res = await fetch(`/api/aluno?cpf=${cpf.replace(/\D/g, '')}`) // Limpa CPF antes de enviar
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ message: "Erro ao buscar aluno" }));
+        throw new Error(errorData.message || `Erro ${res.status} ao buscar aluno`);
+      }
       const data = await res.json()
       if (!data) {
         setError("Aluno não encontrado.")
@@ -74,11 +81,12 @@ export default function ConsultaAlunoHonr() {
         return
       }
       setAluno(data)
-      // Buscar escola
-      const escolaRes = await fetch(`/api/escolas/${data.escolaId}`)
-      if (escolaRes.ok) {
-        const escolaData = await escolaRes.json()
-        setEscola(escolaData)
+      if (data.escolaId) {
+        const escolaRes = await fetch(`/api/escolas/${data.escolaId}`)
+        if (escolaRes.ok) {
+          const escolaData = await escolaRes.json()
+          setEscola(escolaData)
+        }
       }
     } catch (err: any) {
       setError(err.message || "Erro ao buscar aluno")
@@ -87,14 +95,55 @@ export default function ConsultaAlunoHonr() {
   }
 
   const handleEnviarNFT = async () => {
-    if (!premioSelecionado) return
+    if (!premioSelecionado) {
+      setError("Por favor, selecione um prêmio/honraria.");
+      return;
+    }
+    if (!aluno || !aluno.id) {
+      setError("Dados do aluno não carregados ou ID do aluno ausente.");
+      return;
+    }
+
     setEnviando(true)
     setMsg("")
-    // Aqui você pode chamar sua API para enviar o NFT com o prêmio selecionado
-    setTimeout(() => {
-      setEnviando(false)
-      setMsg("NFT de honra ao mérito enviado com sucesso para a carteira do aluno!")
-    }, 1500)
+    setError("")
+
+    try {
+      console.log(`Enviando NFT para alunoId: ${aluno.id} com prêmio: ${premioSelecionado} via proxy`);
+      
+      const payload = {
+        alunoId: aluno.id,
+        premio: premioSelecionado, // Enviamos o prêmio para o proxy, caso ele precise/queira repassar
+        // descricaoPremio: TODOS_PREMIOS.find(p => p.nome === premioSelecionado)?.descricao,
+      };
+
+      const response = await fetch(PROXY_NFT_MINT_API_URL, { // Chamada para o proxy
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const errorMessage = responseData?.error || responseData?.message || `Erro ${response.status} ao enviar NFT via proxy.`;
+        throw new Error(errorMessage);
+      }
+
+      console.log("Resposta da API proxy:", responseData);
+      // Assumindo que a API de NFT retorna uma mensagem de sucesso, ou usamos uma padrão
+      setMsg(responseData.message || "NFT de honra ao mérito enviado com sucesso para a carteira do aluno!");
+      // Opcional: resetar seleção de prêmio
+      // setPremioSelecionado(null);
+
+    } catch (err: any) {
+      console.error("Erro ao enviar NFT via proxy:", err);
+      setError(err.message || "Ocorreu um erro desconhecido ao tentar enviar o NFT.");
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
@@ -118,10 +167,10 @@ export default function ConsultaAlunoHonr() {
                   id="cpf"
                   type="text"
                   value={cpf}
-                  onChange={e => setCpf(e.target.value)}
+                  onChange={e => setCpf(e.target.value.replace(/\D/g, ''))}
                   maxLength={11}
                   required
-                  placeholder="Digite o CPF"
+                  placeholder="Digite o CPF (apenas números)"
                   className="mt-1 dark:bg-gray-800 dark:text-sky-100 dark:border-gray-700"
                 />
               </div>
@@ -139,9 +188,17 @@ export default function ConsultaAlunoHonr() {
                 {error}
               </div>
             )}
+             {msg && !error && (
+              <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 text-green-700 dark:text-green-300 text-sm rounded">
+                {msg}
+              </div>
+            )}
 
             {aluno && (
               <div className="mt-6 space-y-3">
+                <div>
+                  <span className="font-semibold text-sky-900 dark:text-sky-100">ID:</span> {aluno.id} {/* Mostrando o ID para confirmação */}
+                </div>
                 <div>
                   <span className="font-semibold text-sky-900 dark:text-sky-100">Nome:</span> {aluno.nome}
                 </div>
@@ -154,7 +211,7 @@ export default function ConsultaAlunoHonr() {
                 </div>
                 <div>
                   <span className="font-semibold text-sky-900 dark:text-sky-100">Escola:</span>{" "}
-                  {escola ? escola.nome : <span className="italic text-gray-500 dark:text-gray-400">Carregando...</span>}
+                  {escola ? escola.nome : aluno.escolaId ? <span className="italic text-gray-500 dark:text-gray-400">Carregando...</span> : <span className="italic text-gray-500 dark:text-gray-400">Não vinculada</span>}
                 </div>
                 <div className="mt-6">
                   <Label htmlFor="premio" className="dark:text-gray-200">Selecione o prêmio/honraria</Label>
@@ -167,7 +224,7 @@ export default function ConsultaAlunoHonr() {
                     </SelectTrigger>
                     <SelectContent className="dark:bg-gray-900 dark:text-sky-100">
                       {TODOS_PREMIOS.map((premio) => (
-                        <SelectItem key={premio.id} value={premio.nome} className="dark:bg-gray-900 dark:text-sky-100">
+                        <SelectItem key={premio.id} value={premio.nome} className="dark:bg-gray-900 dark:text-sky-100 focus:bg-sky-100 dark:focus:bg-gray-800">
                           <span className="font-medium">{premio.nome}</span>
                           <span className="block text-xs text-gray-500 dark:text-gray-400">{premio.descricao}</span>
                         </SelectItem>
@@ -179,24 +236,17 @@ export default function ConsultaAlunoHonr() {
                   <Button
                     onClick={handleEnviarNFT}
                     className="bg-sky-700 hover:bg-sky-800 dark:bg-blue-600 dark:hover:bg-blue-700"
-                    disabled={enviando || !premioSelecionado}
+                    disabled={enviando || !premioSelecionado || !aluno?.id}
                     type="button"
                   >
                     {enviando ? "Enviando NFT..." : "Enviar NFT de Honra ao Mérito"}
                   </Button>
-                  {msg && (
-                    <div className="p-2 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 text-green-700 dark:text-green-300 text-sm rounded">
-                      {msg}
-                    </div>
-                  )}
                 </div>
               </div>
             )}
           </CardContent>
         </Card>
       </main>
-
-      
     </div>
   )
 }
