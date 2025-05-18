@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowLeft, Search, MapPin, School, Award, Building, Star } from "lucide-react"
+import { ArrowLeft, Search, MapPin, School, Award, Building, Star, ChevronDown, ChevronUp, Phone, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -19,7 +19,21 @@ const MapComponent = dynamic(() => import("@/components/map-component"), {
   ),
 })
 
-const instituicoesBase = [
+// Interface para as instituições
+interface Instituicao {
+  id: number;
+  nome: string;
+  tipo: string;
+  endereco: string;
+  cidade: string;
+  estado: string;
+  lat: number;
+  lng: number;
+  email?: string;
+  telefone?: string;
+}
+
+const instituicoesBase: Instituicao[] = [
   {
     id: 1,
     nome: "Universidade Federal",
@@ -29,6 +43,8 @@ const instituicoesBase = [
     estado: "SP",
     lat: -23.5505,
     lng: -46.6333,
+    email: "contato@universidadefederal.edu.br",
+    telefone: "(11) 3333-5000"
   },
   {
     id: 2,
@@ -39,6 +55,8 @@ const instituicoesBase = [
     estado: "RJ",
     lat: -22.9068,
     lng: -43.1729,
+    email: "secretaria@institutotecnico.edu.br",
+    telefone: "(21) 2542-8800"
   },
   {
     id: 3,
@@ -49,6 +67,8 @@ const instituicoesBase = [
     estado: "MG",
     lat: -19.9167,
     lng: -43.9345,
+    email: "contato@fundacaopesquisa.org.br",
+    telefone: "(31) 3399-7700"
   },
   {
     id: 4,
@@ -59,6 +79,8 @@ const instituicoesBase = [
     estado: "DF",
     lat: -15.7801,
     lng: -47.9292,
+    email: "atendimento@educacao.gov.br",
+    telefone: "(61) 2022-8000"
   },
   {
     id: 5,
@@ -69,6 +91,8 @@ const instituicoesBase = [
     estado: "PE",
     lat: -8.0476,
     lng: -34.877,
+    email: "carreiras@emptec.com.br",
+    telefone: "(81) 3333-2020"
   },
   {
     id: 6,
@@ -79,11 +103,13 @@ const instituicoesBase = [
     estado: "PE",
     lat: -8.0476,
     lng: -34.877,
+    email: "oportunidades@techinova.com.br",
+    telefone: "(81) 3366-4040"
   },
 ];
 
 // Função para gerar novas escolas apenas no Brasil
-function gerarNovasEscolas(quantidade: number, idInicial: number) {
+function gerarNovasEscolas(quantidade: number, idInicial: number): Instituicao[] {
   const novas = [];
   const nomesBaseEscola = [
     "Escola Estadual", "Colégio Municipal", "Instituto de Ensino", "Centro Educacional",
@@ -105,17 +131,20 @@ function gerarNovasEscolas(quantidade: number, idInicial: number) {
 
   // Todas as cidades são brasileiras
   const cidadesInfo = [
-    { nome: "Curitiba", estado: "PR", latBase: -25.4284, lngBase: -49.2733 },
-    { nome: "Porto Alegre", estado: "RS", latBase: -30.0346, lngBase: -51.2177 },
-    { nome: "Salvador", estado: "BA", latBase: -12.9714, lngBase: -38.5014 },
-    { nome: "Manaus", estado: "AM", latBase: -3.1190, lngBase: -60.0217 },
-    { nome: "Fortaleza", estado: "CE", latBase: -3.7327, lngBase: -38.5267 },
-    { nome: "Goiânia", estado: "GO", latBase: -16.6869, lngBase: -49.2643 },
-    { nome: "Belém", estado: "PA", latBase: -1.4558, lngBase: -48.5039 },
-    { nome: "Florianópolis", estado: "SC", latBase: -27.5935, lngBase: -48.55854 },
-    { nome: "Vitória", estado: "ES", latBase: -20.3155, lngBase: -40.3128 },
-    { nome: "Campo Grande", estado: "MS", latBase: -20.4697, lngBase: -54.6201 }
+    { nome: "Curitiba", estado: "PR", latBase: -25.4284, lngBase: -49.2733, ddd: "41" },
+    { nome: "Porto Alegre", estado: "RS", latBase: -30.0346, lngBase: -51.2177, ddd: "51" },
+    { nome: "Salvador", estado: "BA", latBase: -12.9714, lngBase: -38.5014, ddd: "71" },
+    { nome: "Manaus", estado: "AM", latBase: -3.1190, lngBase: -60.0217, ddd: "92" },
+    { nome: "Fortaleza", estado: "CE", latBase: -3.7327, lngBase: -38.5267, ddd: "85" },
+    { nome: "Goiânia", estado: "GO", latBase: -16.6869, lngBase: -49.2643, ddd: "62" },
+    { nome: "Belém", estado: "PA", latBase: -1.4558, lngBase: -48.5039, ddd: "91" },
+    { nome: "Florianópolis", estado: "SC", latBase: -27.5935, lngBase: -48.55854, ddd: "48" },
+    { nome: "Vitória", estado: "ES", latBase: -20.3155, lngBase: -40.3128, ddd: "27" },
+    { nome: "Campo Grande", estado: "MS", latBase: -20.4697, lngBase: -54.6201, ddd: "67" }
   ];
+
+  // Domínios comuns para escolas
+  const dominios = ["edu.br", "escolas.com.br", "ensino.org.br", "educacional.net.br", "estudantes.org.br"];
 
   for (let i = 0; i < quantidade; i++) {
     const nomeEscolaBase = nomesBaseEscola[Math.floor(Math.random() * nomesBaseEscola.length)];
@@ -133,6 +162,14 @@ function gerarNovasEscolas(quantidade: number, idInicial: number) {
     const lat = parseFloat((cidadeSelecionada.latBase + (Math.random() - 0.5) * 0.02).toFixed(4));
     const lng = parseFloat((cidadeSelecionada.lngBase + (Math.random() - 0.5) * 0.02).toFixed(4));
 
+    // Gera um domínio baseado no nome da escola
+    const nomeSemEspacos = nomeEscolaBase.toLowerCase().replace(/\s+/g, "");
+    const dominio = dominios[Math.floor(Math.random() * dominios.length)];
+    const email = `contato@${nomeSemEspacos}${Math.floor(Math.random() * 100)}.${dominio}`;
+
+    // Gera telefone com DDD da cidade
+    const telefone = `(${cidadeSelecionada.ddd}) ${Math.floor(Math.random() * 9000) + 1000}-${Math.floor(Math.random() * 9000) + 1000}`;
+
     novas.push({
       id: idInicial + i,
       nome: nomeCompleto,
@@ -142,6 +179,8 @@ function gerarNovasEscolas(quantidade: number, idInicial: number) {
       estado: cidadeSelecionada.estado,
       lat: lat,
       lng: lng,
+      email: email,
+      telefone: telefone
     });
   }
   return novas;
@@ -158,8 +197,21 @@ const cinquentaNovasEscolas = gerarNovasEscolas(50, proximoId);
 // Adiciona as novas escolas ao array original
 const instituicoes = [...instituicoesBase, ...cinquentaNovasEscolas];
 
+// Interface para detalhes de escola
+interface DetalhesEscola {
+  quantidadeAlunos: number;
+  alunosHonra: number;
+  enderecoBanco: string;
+  alunosMaisHonra: { nome: string; honras: number }[];
+  email?: string;
+  telefone?: string;
+}
+
 // Função simulada para buscar detalhes da escola (substitua por chamada real ao backend)
-function buscarDetalhesEscola(id: number) {
+function buscarDetalhesEscola(id: number): DetalhesEscola {
+  // Encontre a instituição pelo ID para obter email e telefone
+  const instituicao = instituicoes.find(inst => inst.id === id);
+
   // Simule dados
   // Para simular "talentos", algumas escolas terão alunosMaisHonra vazio
   const temTalentos = id % 3 !== 0; // só para simulação: 2/3 das escolas têm talentos
@@ -169,12 +221,23 @@ function buscarDetalhesEscola(id: number) {
     enderecoBanco: "Endereço atualizado do banco de dados",
     alunosMaisHonra: temTalentos
       ? [
-          { nome: "Ana Silva", honras: 5 },
-          { nome: "Carlos Souza", honras: 4 },
-          { nome: "Maria Oliveira", honras: 3 },
-        ]
+        { nome: "Ana Silva", honras: 5 + (id % 5) },
+        { nome: "Carlos Souza", honras: 4 + (id % 3) },
+        { nome: "Maria Oliveira", honras: 3 + (id % 2) },
+      ]
       : [],
+    email: instituicao?.email,
+    telefone: instituicao?.telefone
   }
+}
+
+// NOVO: Ordena as escolas por quantidade de NFTs (alunosHonra) decrescente
+function ordenarEscolasPorNFTs(lista: typeof instituicoes) {
+  return [...lista].sort((a, b) => {
+    const detalhesA = buscarDetalhesEscola(a.id)
+    const detalhesB = buscarDetalhesEscola(b.id)
+    return (detalhesB.alunosHonra || 0) - (detalhesA.alunosHonra || 0)
+  })
 }
 
 export default function MapaPage() {
@@ -183,8 +246,9 @@ export default function MapaPage() {
   const [apenasComTalentos, setApenasComTalentos] = useState(false)
   const [instituicoesFiltradas, setInstituicoesFiltradas] = useState(instituicoes)
   const [instituicaoSelecionada, setInstituicaoSelecionada] = useState<number | null>(null)
-  const [detalhesEscola, setDetalhesEscola] = useState<any | null>(null)
+  const [detalhesEscola, setDetalhesEscola] = useState<DetalhesEscola | null>(null)
   const [detalhesBoxVisivel, setDetalhesBoxVisivel] = useState(false)
+  const [dashboardExpandido, setDashboardExpandido] = useState(true)
 
   // Atualiza detalhes ao selecionar uma instituição
   useEffect(() => {
@@ -195,7 +259,7 @@ export default function MapaPage() {
     }
   }, [instituicaoSelecionada])
 
-  // Atualiza lista filtrada
+  // Atualiza lista filtrada e ordena por NFTs
   useEffect(() => {
     let resultado = instituicoes
 
@@ -220,6 +284,9 @@ export default function MapaPage() {
         return detalhes.alunosMaisHonra && detalhes.alunosMaisHonra.length > 0
       })
     }
+
+    // Ordena por quantidade de NFTs (alunosHonra)
+    resultado = ordenarEscolasPorNFTs(resultado)
 
     setInstituicoesFiltradas(resultado)
   }, [filtroTipo, termoBusca, apenasComTalentos])
@@ -264,6 +331,11 @@ export default function MapaPage() {
   const handleFecharDetalhesBox = () => {
     setDetalhesBoxVisivel(false)
   }
+
+  // Encontra a instituição selecionada
+  const instituicaoAtual = instituicaoSelecionada
+    ? instituicoes.find(inst => inst.id === instituicaoSelecionada)
+    : null;
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-50 to-white">
@@ -335,8 +407,8 @@ export default function MapaPage() {
                         <div
                           key={inst.id}
                           className={`p-3 rounded-lg border cursor-pointer transition-colors ${instituicaoSelecionada === inst.id
-                              ? "bg-sky-100 border-sky-200"
-                              : "bg-white hover:bg-gray-50 border-gray-100"
+                            ? "bg-sky-100 border-sky-200"
+                            : "bg-white hover:bg-gray-50 border-gray-100"
                             }`}
                           onClick={() => setInstituicaoSelecionada(inst.id)}
                         >
@@ -348,6 +420,19 @@ export default function MapaPage() {
                               <p className="text-xs text-gray-500">
                                 {inst.cidade}, {inst.estado}
                               </p>
+                              {/* Exibindo email e telefone */}
+                              {inst.email && (
+                                <p className="text-xs flex items-center gap-1 mt-1 text-sky-600">
+                                  <Mail className="h-3 w-3" />
+                                  {inst.email}
+                                </p>
+                              )}
+                              {inst.telefone && (
+                                <p className="text-xs flex items-center gap-1 text-sky-600">
+                                  <Phone className="h-3 w-3" />
+                                  {inst.telefone}
+                                </p>
+                              )}
                               <div className="mt-1 flex gap-2 items-center">
                                 <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-sky-100 text-sky-800">
                                   {getTipoNome(inst.tipo)}
@@ -389,15 +474,41 @@ export default function MapaPage() {
               </CardContent>
             </Card>
 
-            {/* Dashboard de detalhes */}
+            {/* Dashboard de detalhes - agora expansível e maior */}
             <Card>
-              <CardContent className="p-4">
-                <h2 className="font-semibold text-sky-900 mb-2">Dashboard da Escola</h2>
+              <CardContent className={`p-4 transition-all duration-300 ${dashboardExpandido ? "h-auto" : "h-16 overflow-hidden"}`}>
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="font-semibold text-sky-900">Dashboard da Escola</h2>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="ml-2"
+                    onClick={() => setDashboardExpandido((v) => !v)}
+                    aria-label={dashboardExpandido ? "Recolher dashboard" : "Expandir dashboard"}
+                  >
+                    {dashboardExpandido ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  </Button>
+                </div>
                 {detalhesEscola && instituicaoSelecionada ? (
                   <>
                     <p><b>Quantidade de alunos:</b> {detalhesEscola.quantidadeAlunos}</p>
                     <p><b>Alunos com honras ao mérito:</b> {detalhesEscola.alunosHonra}</p>
                     <p><b>Endereço (banco de dados):</b> {detalhesEscola.enderecoBanco}</p>
+
+                    {/* Informações de contato */}
+                    {detalhesEscola.email && (
+                      <p className="flex items-center gap-1 mt-2 text-sky-700">
+                        <Mail className="h-4 w-4" />
+                        <b>Email:</b> {detalhesEscola.email}
+                      </p>
+                    )}
+                    {detalhesEscola.telefone && (
+                      <p className="flex items-center gap-1 text-sky-700">
+                        <Phone className="h-4 w-4" />
+                        <b>Telefone:</b> {detalhesEscola.telefone}
+                      </p>
+                    )}
+
                     <div className="mt-2">
                       <b>Alunos com mais honras ao mérito:</b>
                       {detalhesEscola.alunosMaisHonra.length > 0 ? (
