@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Web3 from "web3"
 import { contractABI } from "@/lib/contractABI"
+import { useRouter } from "next/navigation"
 
 const CONTRACT_ADDRESS = "0xD4c77dF18E8c6cA4b6022089ef040e17523A447a"
 
@@ -28,6 +29,14 @@ export default function GovernoValidaEscola() {
   const [contract, setContract] = useState<any>(null)
   const [account, setAccount] = useState<string>("")
   const [walletError, setWalletError] = useState<string | null>(null)
+
+  const router = useRouter()
+
+  const roleToPath: Record<string, string> = {
+    governo: "/governo",
+    escola: "/escola",
+    instituicao: "/instituicao/login",
+  }
 
   useEffect(() => {
     if (typeof window !== "undefined" && (window as any).ethereum) {

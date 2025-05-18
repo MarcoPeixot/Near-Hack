@@ -7,15 +7,25 @@ import { motion } from "framer-motion"
 import { ArrowLeft, FlagIcon as Government, School, GraduationCap, Award } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 export default function Login() {
   const [mounted, setMounted] = useState(false)
   const [selectedRole, setSelectedRole] = useState<string | null>(null)
   const { theme } = useTheme()
+  const router = useRouter()
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const handleContinue = () => {
+    if (!selectedRole) return
+    if (selectedRole === "governo") router.push("/governo")
+    else if (selectedRole === "escola") router.push("/escola")
+    else if (selectedRole === "instituicao") router.push("/instituicao/login")
+    else if (selectedRole === "instituicao_oportunidade") router.push("/instituicao/map")
+  }
 
   if (!mounted) return null
 
@@ -39,8 +49,8 @@ export default function Login() {
           className="w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 border border-gray-200 dark:border-gray-700"
         >
           <div className="flex items-center justify-center mb-8">
-            <div className="relative w-16 h-16">
-              <Image src="/logo.png" alt="Edu Wallet Logo" fill className="object-contain" />
+            <div className="relative w-32 h-32">
+              <Image src="/hackathon-hacks.png" alt="Edu Wallet Logo" fill className="object-contain" />
             </div>
           </div>
 
@@ -80,6 +90,7 @@ export default function Login() {
           <div className="flex flex-col items-center">
             <Button
               disabled={!selectedRole}
+              onClick={handleContinue}
               className={`w-full max-w-xs py-6 rounded-full font-medium text-center ${
                 selectedRole
                   ? "bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white"
@@ -123,9 +134,9 @@ const roles = [
     icon: <School size={24} />,
   },
   {
-    id: "aluno",
-    title: "Aluno",
-    icon: <GraduationCap size={24} />,
+    id: "instituicao_oportunidade",
+    title: "Instituição de Oportunidade",
+    icon: <Award size={24} />,
   },
   {
     id: "instituicao",

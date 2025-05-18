@@ -34,7 +34,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10">
-              <Image src="/logo.png" alt="Edu Wallet Logo" fill className="object-contain" priority />
+              <Image src="/hackathon-hacks.png" alt="Edu Wallet Logo" fill className="object-contain" priority />
             </div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-500 dark:to-blue-300 bg-clip-text text-transparent">
               Edu Wallet
@@ -288,7 +288,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center gap-3 mb-6 md:mb-0">
               <div className="relative w-8 h-8">
-                <Image src="/logo.png" alt="Edu Wallet Logo" fill className="object-contain" />
+                <Image src="/hackathon-hacks.png" alt="Edu Wallet Logo" fill className="object-contain" />
               </div>
               <span className="font-medium">Edu Wallet</span>
             </div>
