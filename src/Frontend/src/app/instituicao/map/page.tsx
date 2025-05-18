@@ -221,9 +221,9 @@ function buscarDetalhesEscola(id: number): DetalhesEscola {
     enderecoBanco: "Endereço atualizado do banco de dados",
     alunosMaisHonra: temTalentos
       ? [
-        { nome: "Ana Silva", honras: 5 + (id % 5) },
-        { nome: "Carlos Souza", honras: 4 + (id % 3) },
-        { nome: "Maria Oliveira", honras: 3 + (id % 2) },
+        { nome: "Aluno 1", honras: 5 + (id % 5) },
+        { nome: "Aluno 2", honras: 4 + (id % 3) },
+        { nome: "Aluno 3 ", honras: 3 + (id % 2) },
       ]
       : [],
     email: instituicao?.email,
