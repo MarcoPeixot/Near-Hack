@@ -237,7 +237,7 @@ const teamMembers = [
   },
   {
     name: "Matheus Ribeiro",
-    role: "Web3 Developer",
+    role: "Full Stack Developer",
     bio: "https://github.com/omatheu",
     image: "/matheus.jpeg",
   },
@@ -249,7 +249,7 @@ const teamMembers = [
   },
   {
     name: "Thiago Volcati",
-    role: "Vagabundo Developer",
+    role: "Web3 Developer",
     bio: "https://github.com/tvolcati",
     image: "/thiago.jpeg",
   },
