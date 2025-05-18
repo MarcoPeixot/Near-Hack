@@ -2,6 +2,8 @@
 
 import { useState, useEffect, Suspense, FormEvent, ChangeEvent } from "react";
 import { useSearchParams } from "next/navigation";
+import Web3 from "web3";
+import { contractABI } from "@/lib/contractABI";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -31,6 +33,11 @@ function CadastrarEscolaContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [formFeedback, setFormFeedback] = useState<{ type: 'error' | 'success', message: string } | null>(null);
 
+  // Blockchain integration state
+  const [web3, setWeb3] = useState<any>(null);
+  const [accounts, setAccounts] = useState<string[]>([]);
+  const [contract, setContract] = useState<any>(null);
+
   useEffect(() => {
     if (escolaIdParam) {
       setEscolaId(Number(escolaIdParam));
@@ -39,6 +46,19 @@ function CadastrarEscolaContent() {
       setFormFeedback({ type: 'error', message: "ID da instituição não fornecido na URL. Verifique o link ou retorne e selecione uma instituição." });
     }
   }, [escolaIdParam]);
+
+  useEffect(() => {
+    // Only run on client
+    if (typeof window !== "undefined" && (window as any).ethereum) {
+      const w3 = new Web3((window as any).ethereum);
+      setWeb3(w3);
+      w3.eth.requestAccounts().then((accs: string[]) => {
+        setAccounts(accs);
+        const contractAddress = "0xD4c77dF18E8c6cA4b6022089ef040e17523A447a";
+        setContract(new w3.eth.Contract(contractABI as any, contractAddress));
+      });
+    }
+  }, []);
 
   const resetFormFeedback = () => setFormFeedback(null);
   const resetFullForm = () => {
@@ -165,6 +185,7 @@ function CadastrarEscolaContent() {
     }
   };
 
+  // Handler atualizado para afiliar aluno na blockchain
   const handleAfiliarEscolaSubmit = async (e: FormEvent) => {
     e.preventDefault();
     resetFormFeedback();
@@ -172,10 +193,17 @@ function CadastrarEscolaContent() {
     try {
       if (!alunoId || !escolaId) throw new Error("Aluno ou instituição não selecionado(a).");
       await atualizarAluno(alunoId, { escolaId });
-      setFormFeedback({ type: 'success', message: "Aluno afiliado à instituição com sucesso!" });
+      // Blockchain: chama affiliateStudent
+      if (!web3 || !contract || !accounts[0]) throw new Error("Carteira não conectada.");
+      // O campo correto é walletAddress
+      const alunoAddress = aluno?.walletAddress;
+      if (!alunoAddress) throw new Error("Endereço da carteira do aluno não disponível.");
+      await contract.methods.affiliateStudent(alunoAddress).send({ from: accounts[0] });
+      setFormFeedback({ type: 'success', message: "Aluno afiliado à instituição e registrado na blockchain com sucesso!" });
       setStep("rematricula");
-    } catch (err: any) {
-      setFormFeedback({ type: 'error', message: err.message || "Erro ao afiliar aluno à instituição." });
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      setFormFeedback({ type: 'error', message: errorMsg || "Erro ao afiliar aluno à instituição." });
     } finally {
       setIsLoading(false);
     }
@@ -200,8 +228,9 @@ function CadastrarEscolaContent() {
       //   setStep("cpf");
       //   resetFullForm();
       // }, 3000);
-    } catch (err: any) {
-      setFormFeedback({ type: 'error', message: err.message || "Erro ao atualizar aluno." });
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      setFormFeedback({ type: 'error', message: errorMsg || "Erro ao atualizar aluno." });
     } finally {
       setIsLoading(false);
     }
