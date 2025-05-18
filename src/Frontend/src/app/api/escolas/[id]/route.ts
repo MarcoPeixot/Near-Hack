@@ -1,36 +1,34 @@
-import { NextRequest, NextResponse } from "next/server"; // Importe NextRequest também
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(
-  req: NextRequest, // É uma boa prática usar NextRequest
-  context: { params: { id: string } } // <--- CORRIGIDO: Este é o objeto de contexto
-) {
-  // Extrai o id dos parâmetros da rota
-  const idFromParams = context.params.id;
-
-  // Converte o ID para número, pois o ID na URL é uma string
-  const id = Number(idFromParams);
-
-  // Validação se o ID é um número válido
-  if (isNaN(id)) {
-    return NextResponse.json(
-      { error: "ID inválido. O ID deve ser um número." },
-      { status: 400 }
-    );
-  }
-
+// Versão simplificada sem tipagem explícita no segundo parâmetro
+export async function GET(request, { params }) {
   try {
+    // Extrair o ID da escola dos parâmetros da URL
+    const id = Number(params.id);
+    
+    // Verificar se o ID é válido
+    if (isNaN(id)) {
+      return NextResponse.json(
+        { error: "ID inválido. O ID deve ser um número." },
+        { status: 400 }
+      );
+    }
+    
+    // Buscar a escola no banco de dados
     const escola = await prisma.escola.findUnique({
-      where: { id: id }, // Certifique-se de que o campo 'id' no seu schema do Prisma é um Int
+      where: { id },
     });
-
+    
+    // Se a escola não for encontrada, retornar um erro 404
     if (!escola) {
       return NextResponse.json(
         { error: "Escola não encontrada" },
         { status: 404 }
       );
     }
-
+    
+    // Retornar os dados da escola
     return NextResponse.json(escola);
   } catch (error) {
     console.error("Erro ao buscar escola:", error);
