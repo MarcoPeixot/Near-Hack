@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       {
         source: '/api/lumx/:path*',
         destination: `${process.env.NEXT_PUBLIC_LUMX_API_URL}/:path*`,
+        ignoreDuringBuilds: true,
       },
     ];
   },
