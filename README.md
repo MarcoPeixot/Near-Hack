@@ -176,13 +176,12 @@ A Edu Wallet adotará um modelo de negócios **Freemium Híbrido**, priorizando 
 * **Financeiro:** Receita (MRR/ARR), taxa de conversão para planos pagos, custo de aquisição de clientes (CAC).
 
 ## 6. Equipe
-* **Fulano (CEO / Visão de Produto):** [Destacar experiência em gestão, visão estratégica, conhecimento do setor educacional ou de tecnologia com impacto social.]
-* **Ciclano (CMO / Desenvolvimento de Negócios):** [Destacar experiência em marketing, vendas, parcerias estratégicas, especialmente com governo ou setor educacional.]
-* **Beltrano (COO / Operações e Pesquisa):** [Destacar experiência em operações, pesquisa de mercado, gestão de projetos, relacionamento com stakeholders.]
+* **Giovanna Britto (Web3 Developer):** [GitHub](https://github.com/giovanna-britto)
+* **Matheus Ribeiro (Full Stack Developer):** [GitHub](https://github.com/omatheu)
+* **Marco Ruas (Full Stack Developer):** [GitHub](https://github.com/MarcoPeixot)
+* **Thiago Volcati (Web3 Developer):** [GitHub](https://github.com/tvolcati)
 
-*(Adaptar os papéis e descrições para refletir as forças da equipe real em termos de execução de negócios.)*
-
-**Contato:** edu-wallet@nearx.com
+**Contato geral:** edu-wallet@nearx.com  
 **GitHub (para visão geral do projeto):** https://github.com/edu-wallet/nearx2025
 
 ## 7. Considerações Finais
