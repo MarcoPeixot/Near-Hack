@@ -1,52 +1,55 @@
-// mint-nft.js
-// Este script gera um tokenURI simples (sem imagem) e chama a função mintWithVerifiedProof()
-
+const express = require("express");
+const router = express.Router();
+const { PrismaClient } = require("@prisma/client");
 const { ethers } = require("ethers");
 const fs = require("fs");
 
-require("dotenv").config();
+const prisma = new PrismaClient();
+const abi = require("./abi.json");
+
 const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
 const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+const contract = new ethers.Contract(process.env.CONTRACT_ADDRESS, abi, signer);
 
-const contractAddress = "0x29aBD0a13E6C1665D1955FD431479118Bb304552";
-const abi = require("./abi.json"); 
+router.post("/", async (req, res) => {
+  const { alunoId } = req.body;
 
-const contract = new ethers.Contract(contractAddress, abi, signer);
-
-const aluno = {
-  nome: "Lucas Britto",
-  curso: "Ciência da Computação",
-  periodo: "3º Semestre",
-  carteira: "0x11FbD2E02ca5bCd2f8e9A7e09089A9c877760113"
-};
-
-const metadata = {
-  name: aluno.nome,
-  description: `Aluno do curso de ${aluno.curso}`,
-  attributes: [
-    { trait_type: "Curso", value: aluno.curso },
-    { trait_type: "Período", value: aluno.periodo }
-  ]
-};
-
-const base64json = Buffer.from(JSON.stringify(metadata)).toString("base64");
-const tokenURI = `data:application/json;base64,${base64json}`;
-
-async function mint() {
   try {
-    const tx = await contract.mintWithVerifiedProof(
-      aluno.carteira,
-      tokenURI,
-      [],
-      ethers.ZeroHash,
-      0, 0, ethers.ZeroHash, 0, 0
-    );
-    console.log("NFT enviado, aguardando confirmação...");
-    await tx.wait();
-    console.log("NFT criado com sucesso para:", aluno.nome);
-  } catch (err) {
-    console.error("Erro ao mintar NFT:", err);
-  }
-}
+    const aluno = await prisma.aluno.findUnique({
+      where: { id: alunoId },
+      include: { escola: true },
+    });
 
-mint();
+    if (!aluno) return res.status(404).json({ error: "Aluno não encontrado" });
+
+    const metadata = {
+      name: aluno.nome,
+      description: `Aluno do curso de ${aluno.escola.nome}`,
+      attributes: [
+        { trait_type: "Curso", value: aluno.escola.nome },
+        { trait_type: "Escola", value: aluno.escola.nome }
+      ]
+    };
+
+    const base64json = Buffer.from(JSON.stringify(metadata)).toString("base64");
+    const tokenURI = `data:application/json;base64,${base64json}`;
+
+    const tx = await contract.mintWithVerifiedProof(
+      aluno.walletAddress,
+      tokenURI,
+      [],                     // proof
+      ethers.ZeroHash,       // aggregation
+      0, 0, ethers.ZeroHash, // outros campos
+      0, 0
+    );
+
+    await tx.wait();
+    res.json({ message: "NFT mintado com sucesso", txHash: tx.hash });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao mintar NFT", details: err.message });
+  }
+});
+
+module.exports = router;
