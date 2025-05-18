@@ -196,9 +196,7 @@ export default function ConsultaAlunoHonr() {
         </Card>
       </main>
 
-      <footer className="py-4 px-4 text-center text-sm text-sky-600 dark:text-sky-200 dark:bg-gray-900 row-start-3">
-        <p>© {new Date().getFullYear()} Passaporte Acadêmico On-Chain • Todos os direitos reservados</p>
-      </footer>
+      
     </div>
   )
 }

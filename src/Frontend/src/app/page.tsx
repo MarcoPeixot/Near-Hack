@@ -3,35 +3,28 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
-import { useTheme } from "next-themes"
-import { Menu, X, Moon, Sun, ChevronRight, Wallet, Shield, Award, Users, Github } from "lucide-react"
+import { motion } from "framer-motion"
+// useTheme não é usado diretamente aqui, a Navbar cuida disso
+import { ChevronRight, Wallet, Shield, Award, Users, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
+// Footer não foi fornecido, então vou comentar a importação e uso
+// import Footer from "@/components/Footer"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  const toggleMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-  }
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
-  }
-
+  // Para evitar hydration mismatch com useTheme na Navbar
   if (!mounted) return null
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <Navbar />
+      
       {/* Hero Section */}
       <section className="pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="container mx-auto px-4">
@@ -47,13 +40,22 @@ export default function Home() {
                 Visibilidade e oportunidade para todos os estudantes através da tecnologia blockchain
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-full px-8 py-6 text-lg font-medium flex items-center gap-2">
-                  <span>Comece Agora</span>
-                  <Wallet size={20} />
-                </Button>
+                <Link href="/login">
+                  <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-full px-8 py-6 text-lg font-medium flex items-center gap-2">
+                    <span>Comece Agora</span>
+                    <Wallet size={20} />
+                  </Button>
+                </Link>
                 <Button
                   variant="outline"
                   className="border-gray-300 dark:border-gray-700 hover:border-blue-600 dark:hover:border-blue-400 rounded-full px-8 py-6 text-lg font-medium flex items-center gap-2"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.getElementById("features");
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
                 >
                   <span>Saiba Mais</span>
                   <ChevronRight size={20} />
@@ -63,8 +65,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-50 dark:bg-gray-900">
+      
+      {/* Features Section - Adicionado scroll-mt-24 */}
+      <section id="features" className="py-20 bg-gray-50 dark:bg-gray-900 scroll-mt-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -103,8 +106,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Team Section */}
-      <section id="team" className="py-20">
+      
+      {/* Team Section - Adicionado scroll-mt-24 */}
+      <section id="team" className="py-20 scroll-mt-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -165,8 +169,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* CTA Section */}
-      <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-900">
+      
+      {/* CTA Section - Adicionado scroll-mt-24 */}
+      <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-900 scroll-mt-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -185,14 +190,16 @@ export default function Home() {
               Junte-se a nós nessa jornada para democratizar o acesso à visibilidade educacional e dar voz a milhares de
               jovens talentos.
             </p>
-            <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-full px-8 py-6 text-lg font-medium">
-              Cadastre-se Agora
-            </Button>
+            <Link href="/login"> {/* Ou poderia ser /signup */}
+              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-full px-8 py-6 text-lg font-medium">
+                Cadastre-se Agora
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
-      {/* Footer */}
       
+      {/* <Footer /> */}
     </div>
   )
 }

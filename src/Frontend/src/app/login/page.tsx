@@ -109,7 +109,6 @@ export default function Login() {
           </div>
         </motion.div>
       </main>
-      <Footer />
     </div>
   )
 }

@@ -339,16 +339,7 @@ export default function MapaPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-950 transition-colors duration-300">
-      <header className="py-4 px-4 md:px-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-        <div className="container mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center text-sky-600 hover:text-sky-700 dark:text-sky-300 dark:hover:text-sky-400 transition-colors">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            <span>Voltar</span>
-          </Link>
-          <h1 className="text-xl font-bold text-sky-900 dark:text-sky-100">Mapa de Instituições</h1>
-          <div className="w-24"></div>
-        </div>
-      </header>
+      
 
       <main className="flex-1 container mx-auto p-4 md:p-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -548,9 +539,7 @@ export default function MapaPage() {
         </div>
       </main>
 
-      <footer className="py-4 px-4 text-center text-sm text-sky-600 dark:text-sky-200 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-        <p>© {new Date().getFullYear()} Passaporte Acadêmico On-Chain • Todos os direitos reservados</p>
-      </footer>
+      
     </div>
   )
 }

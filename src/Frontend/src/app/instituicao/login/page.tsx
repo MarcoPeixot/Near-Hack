@@ -85,7 +85,12 @@ export default function LoginInstituicaoMerito() {
             </CardContent>
 
             <CardFooter className="flex flex-col space-y-4">
-              <Button type="submit" className="w-full bg-sky-600 hover:bg-sky-700 dark:bg-blue-600 dark:hover:bg-blue-700" disabled={isLoading}>
+              {/* Alteração aqui: adicionado mt-4 para margem superior */}
+              <Button 
+                type="submit" 
+                className="w-full bg-sky-600 hover:bg-sky-700 dark:bg-blue-600 dark:hover:bg-blue-700 mt-4" 
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
                     <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -108,9 +113,7 @@ export default function LoginInstituicaoMerito() {
         </Card>
       </main>
 
-      <footer className="py-4 px-4 text-center text-sm text-sky-600 dark:text-sky-200 dark:bg-gray-900 row-start-3">
-        <p>© {new Date().getFullYear()} Passaporte Acadêmico On-Chain • Todos os direitos reservados</p>
-      </footer>
+     
     </div>
   )
 }

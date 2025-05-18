@@ -279,9 +279,7 @@ export default function GovernoValidaEscola() {
         </Card>
       </main>
 
-      <footer className="py-4 px-4 text-center text-sm text-sky-600 dark:text-sky-200 dark:bg-gray-900 border-t border-sky-100 dark:border-gray-800">
-        <p>© {new Date().getFullYear()} Passaporte Acadêmico On-Chain • Todos os direitos reservados</p>
-      </footer>
+      
     </div>
   )
 }
