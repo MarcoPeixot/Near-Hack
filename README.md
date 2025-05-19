@@ -9,11 +9,14 @@
 **Data:** 18 de Maio de 2025
 
 ## Sumário Executivo
-A Edu Wallet é uma plataforma descentralizada, construída sobre a blockchain, com a missão de revolucionar o reconhecimento e a validação de conquistas acadêmicas. Nosso objetivo é democratizar o acesso a oportunidades para estudantes, especialmente aqueles em regiões remotas ou em vulnerabilidade social, conectando-os a instituições de fomento, programas educacionais e ao mercado de trabalho. Utilizando NFTs (Tokens Não Fungíveis) para registrar méritos e tecnologia de Prova de Conhecimento Zero (zkVerify) para garantir a privacidade, a Edu Wallet visa reduzir desigualdades, aumentar a visibilidade de talentos e fornecer dados valiosos para o aprimoramento de políticas educacionais. Este documento detalha a visão de negócios, a análise de mercado, o modelo de monetização e a estratégia de crescimento da Edu Wallet.
+A Edu Wallet é uma plataforma descentralizada, construída sobre a blockchain, com a missão de revolucionar o reconhecimento e a validação de conquistas acadêmicas. Nosso objetivo é democratizar o acesso a oportunidades para estudantes, especialmente aqueles em regiões remotas ou em vulnerabilidade social, conectando-os a instituições de fomento, programas educacionais e ao mercado de trabalho. Utilizando NFTs (Tokens Não Fungíveis) para registrar méritos e tecnologia de Prova de Conhecimento Zero (zkVerify) para garantir a privacidade, a Edu Wallet visa reduzir desigualdades, aumentar a visibilidade de talentos e fornecer dados valiosos para o aprimoramento de políticas educacionais.
 
-* **Link para o vídeo demonstração:** [SEU LINK AQUI]
-* **Link para o pitch:** [SEU LINK AQUI]
-* **Link para os slides:** [SEU LINK AQUI]
+Atualmente, nosso MVP está totalmente implementado e já foi deployado em ambiente funcional, com todas as funcionalidades principais validadas e disponíveis para uso imediato.
+* **Link para testar a Plataforma:** https://near-hack-yxk5.vercel.app/
+* **Link para Visualizar o deploy do contrato:** https://sepolia.etherscan.io/address/0x2c466b43f41a34B3d4d30A1456C3bC9F3E017E08
+* **Link para o pitch:** https://youtu.be/lHCbusSax0E
+* **URL da prova na zKverify:** https://zkverify-testnet.subscan.io/account/xpjcBEqyzsoY2xyZhctLrjexSqJ8KgqZ8ctPrYhoH3K2JMvNP
+* **Link para os slides:** https://www.canva.com/design/DAGn2FvPVE4/izyQo6X9Oni6poV3ak73kg/edit?utm_content=DA[…]m_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 ---
 
@@ -58,30 +61,125 @@ A plataforma Edu Wallet cria um mercado de confiança e oportunidades ao:
 | **Sofia (ONG de Bolsas)** | Processo caro e demorado para achar e verificar talentos em áreas carentes.   | Acesso a um pool maior de talentos verificados, redução de custos e tempo na seleção, diminuição de vieses.          | "Encontre os talentos que transformam o futuro, de forma mais rápida, barata e justa. A Edu Wallet entrega candidatos verificados e diversos diretamente para seus programas."                  |
 | **Dr. Alves (Certificadora)**| Certificados físicos caros, fraudáveis e com pouca rastreabilidade.           | Emissão de certificados digitais seguros, baratos, rastreáveis e com maior alcance.                                 | "Eleve o padrão e o alcance de suas certificações. Com a Edu Wallet, seus certificados são NFTs seguros, imutáveis e globalmente acessíveis, combatendo fraudes e agregando valor."          |
 | **Secretaria de Educação** | Falta de dados precisos para políticas; dificuldade em medir impacto regional.  | Visão clara da distribuição de méritos, dados para políticas baseadas em evidências, fomento à equidade.            | "Transforme a gestão educacional com dados. A Edu Wallet fornece insights valiosos e anonimizados para otimizar investimentos, promover a equidade e medir o impacto de suas iniciativas." |
+### 2.3. Value Proposition Canvas 
 
-### 2.3. Value Proposition Canvas (Resumido)
+O Value Proposition Canvas resume a proposta de valor central da Edu Wallet, alinhando as funcionalidades entregues aos benefícios esperados por cada público. A plataforma foi projetada para resolver dores específicas e gerar ganhos concretos para todos os envolvidos no ecossistema educacional – com foco em alunos, instituições educacionais, certificadoras e organizações que buscam talentos.
 
-* **Para Alunos:**
-    * **Ganhos:** Reconhecimento, portabilidade, segurança, acesso a oportunidades, controle de privacidade.
-    * **Dores Aliviadas:** Invisibilidade, dificuldade de provar méritos, medo de fraude, falta de acesso.
-    * **Produtos/Serviços:** Carteira digital, NFTs de mérito com zkVerify, painel de oportunidades.
-* **Para Instituições (Escolas, Certificadoras, Oportunidade, Governo):**
-    * **Ganhos:** Eficiência, redução de custos, alcance ampliado, dados confiáveis, combate à fraude, promoção da equidade.
-    * **Dores Aliviadas:** Processos manuais, altos custos de verificação, falta de dados, alcance limitado, vieses.
-    * **Produtos/Serviços:** Plataforma de emissão de NFTs, dashboards de busca e análise, APIs de integração, sistema de governança.
+Sim — essa seção está bem estruturada, mas pode ser **mais impactante e diferenciada** se:
+
+1. Trazermos uma **descrição curta antes da lista**, explicando a utilidade do Value Proposition Canvas no contexto do projeto.
+2. Expandirmos um pouco os **“Ganhos” e “Dores Aliviadas” com exemplos reais ou mais específicos**.
+3. Organizarmos a visualização como uma **tabela ou blocos**, para facilitar a leitura.
+
+---
+
+### 🔁 Versão Reescrita e Detalhada da Seção 2.3
+
+---
+
+### 2.4. Value Proposition Canvas (Detalhado)
+
+O Value Proposition Canvas resume a proposta de valor central da Edu Wallet, alinhando as funcionalidades entregues aos benefícios esperados por cada público. A plataforma foi projetada para resolver dores específicas e gerar ganhos concretos para todos os envolvidos no ecossistema educacional – com foco em alunos, instituições educacionais, certificadoras e organizações que buscam talentos.
+
+---
+
+#### Alunos (Usuário Final)
+
+| Elemento              | Detalhamento                                                                                                                                                                                                                                  |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ganhos**            | - Reconhecimento validado por terceiros confiáveis <br> - Portabilidade das conquistas em formato NFT <br> - Acesso a bolsas e programas com base em méritos registrados <br> - Privacidade garantida via zkVerify                            |
+| **Dores Aliviadas**   | - Invisibilidade de conquistas fora do eixo das grandes cidades <br> - Desconfiança sobre certificações <br> - Falta de histórico acadêmico acessível e padronizado <br> - Impossibilidade de comprovar competências informalmente adquiridas |
+| **Produtos/Serviços** | - Carteira Digital descentralizada <br> - NFTs de mérito com privacidade por ZKP <br> - Painel de oportunidades educacionais e de bolsas                                                                                                      |
+
+---
+
+#### Instituições Educacionais e Certificadoras
+
+| Elemento              | Detalhamento                                                                                                                                                                                                                        |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ganhos**            | - Maior visibilidade institucional ao promover alunos <br> - Emissão de certificados rastreáveis e antifraude <br> - Ferramentas que facilitam o acompanhamento de desempenho <br> - Redução de burocracia e custos administrativos |
+| **Dores Aliviadas**   | - Processos manuais e centralizados de geração e envio de certificados <br> - Dificuldade em demonstrar impacto e resultados para parceiros <br> - Impossibilidade de escalar programas educacionais com verificação segura         |
+| **Produtos/Serviços** | - Plataforma de emissão de NFTs <br> - Dashboard para gestão e visualização de méritos <br> - Integrações com sistemas escolares ou educacionais via API                                                                            |
+
+---
+
+#### Instituições de Oportunidade (ONGs, Universidades, Empresas)
+
+| Elemento              | Detalhamento                                                                                                                                                                                                            |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ganhos**            | - Acesso direto a talentos diversos e verificados <br> - Redução do custo de prospecção e triagem <br> - Maior assertividade na seleção de candidatos <br> - Dados confiáveis e atualizados, com consentimento do aluno |
+| **Dores Aliviadas**   | - Processos caros, lentos e enviesados de busca de candidatos <br> - Falta de dados padronizados e verificáveis <br> - Impossibilidade de operar em larga escala em comunidades carentes                                |
+| **Produtos/Serviços** | - Dashboard de busca e descoberta de talentos <br> - Filtros inteligentes e integração com ATS via API <br> - Alertas e matching com base em perfil verificado                                                          |
+
+---
+
+#### Governo (Secretarias de Educação)
+
+| Elemento              | Detalhamento                                                                                                                                                                                                    |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ganhos**            | - Visão centralizada e baseada em dados sobre o desempenho educacional <br> - Formulação de políticas mais assertivas com base em evidências <br> - Redução de fraudes e duplicidades em programas de incentivo |
+| **Dores Aliviadas**   | - Falta de dados confiáveis e agregados sobre a rede <br> - Dificuldade em medir impacto de políticas <br> - Falta de padronização entre escolas e regiões                                                      |
+| **Produtos/Serviços** | - Dashboard governamental <br> - Relatórios anonimizados e em tempo real <br> - Integração com plataformas públicas de educação                                                                                 |
+---
+### 2.3. Funcionalidades do MVP e Status Atual
+
+A versão atual da Edu Wallet representa um MVP funcional completo, com todas as funcionalidades principais implementadas, testadas e deployadas. O foco foi construir uma base sólida que comprovasse a viabilidade técnica da proposta e entregasse valor imediato aos diferentes tipos de usuários (alunos, escolas, certificadoras e instituições de oportunidade). Abaixo, estão listadas as funcionalidades centrais já disponíveis na plataforma:
+
+| **Funcionalidade**                            | **Status**     | **Descrição**                                                                                                    |
+| --------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Carteira digital pessoal para alunos**      |  Implementado | Geração de uma identidade digital única para cada aluno, com armazenamento de NFTs de mérito.                    |
+| **Emissão de NFTs de mérito acadêmico**       |  Implementado | Permite que escolas e certificadoras emitam registros imutáveis das conquistas dos alunos.                       |
+| **Integração com zkVerify (ZK Proofs)**       |  Implementado | Cada NFT pode ter uma prova associada baseada em ZKPs, garantindo privacidade sobre o conteúdo e dados do aluno. |
+| **Painel de oportunidades para instituições** |  Implementado | Dashboard que permite universidades, ONGs e empresas buscarem talentos com filtros e consentimento.              |
+| **Dashboard para escolas**                    |  Implementado | Interface para escolas cadastrarem alunos, emitirem méritos e acompanharem sua evolução.                         |
+| **Plataforma de emissão para certificadoras** |  Implementado | Sistema especializado para organizações que precisam emitir grandes volumes de NFTs certificados.                |
+| **APIs públicas de integração**               |  Implementado | Endpoints documentados para integração com sistemas externos (governos, edtechs, ONGs).                          |
+
+Porém, para avançar rumo à versão Beta e entregar ainda mais valor aos usuários, as seguintes funcionalidades estão planejadas para as próximas etapas de desenvolvimento:
+
+#### Alunos
+
+* **Painel de oportunidades educacionais e de bolsas**
+  Permitir que os alunos consultem programas compatíveis com seus perfis e NFTs de mérito, com base em filtros de interesse, localização e perfil.
+
+#### Escolas
+
+* **Dashboard avançado de gestão e visualização de méritos**
+  Funcionalidade expandida para visualizações analíticas, geração de relatórios escolares e acompanhamento longitudinal de desempenho.
+* **Integrações com sistemas escolares via API**
+  Facilitar a interoperabilidade com plataformas como SEDs estaduais, sistemas de boletins e CRMs educacionais.
+
+#### Instituições de Oportunidade
+
+* **Alertas e sistema de matching inteligente com alunos**
+  Algoritmos de recomendação baseados em perfis e critérios de bolsas para notificar instituições automaticamente sobre talentos compatíveis.
+
+#### Governo
+
+* **Relatórios anonimizados e em tempo real**
+  Painéis com dados agregados para análise de impacto e gestão de programas educacionais por parte das Secretarias de Educação.
+* **Integração com plataformas públicas de educação**
+  Facilitar a troca de dados e a automação de processos com plataformas existentes em redes públicas de ensino.
 
 ## 3. Mercado e Modelo de Negócios
 
+Nesta seção, apresentamos a análise de mercado, o modelo de monetização adotado e a estratégia de entrada e crescimento. O objetivo é demonstrar que a solução proposta é economicamente viável, escalável e posicionada para atender uma necessidade real de diferentes atores no ecossistema educacional.
+
 ### 3.1. Análise de Mercado e Público-Alvo
-* **Mercado Potencial:**
-    * **Brasil:** Milhões de estudantes na educação básica e média, milhares de escolas públicas e privadas, centenas de instituições de fomento e ensino superior, dezenas de secretarias de educação.
-    * **Global (Longo Prazo):** O modelo é escalável para outros países com desafios similares.
-* **Segmentos de Clientes:**
-    1.  **Governo (Secretarias de Educação):** Adotantes chave para escala e impacto sistêmico.
-    2.  **Instituições de Oportunidade (ONGs, Universidades, Empresas):** Dispostas a pagar por acesso eficiente a talentos verificados.
-    3.  **Instituições Certificadoras (Olimpíadas, Plataformas de Cursos):** Buscam modernizar e baratear a emissão de certificados.
-    4.  **Escolas (Públicas e Privadas):** Usuárias da plataforma para beneficiar seus alunos.
-    5.  **Alunos:** Usuários finais e beneficiários diretos.
+**Mercado Potencial:**
+- **Brasil:** Mais de 47 milhões de estudantes estão matriculados na educação básica brasileira, distribuídos em aproximadamente 180 mil escolas públicas e privadas. Isso representa uma base massiva com alto potencial de impacto digital na educação.  
+  **Fonte:** [INEP - Censo Escolar 2023](https://www.gov.br/inep/pt-br/assuntos/noticias/censo-escolar)
+
+- **Global (longo prazo):** De acordo com o relatório da UNESCO, mais de 244 milhões de crianças e jovens estão fora da escola no mundo. Muitos países em desenvolvimento enfrentam desafios similares de acesso, reconhecimento e rastreabilidade de trajetórias educacionais.  
+  **Fonte:** [UNESCO Global Education Monitoring Report](https://www.unesco.org/gem-report/)
+
+**Segmentos de Clientes:**
+
+1. **Governo (Secretarias de Educação):** Adotantes estratégicos com foco em escala, impacto sistêmico e formulação de políticas baseadas em dados.
+2. **Instituições de Oportunidade (ONGs, Universidades, Empresas):** Necessitam identificar e recrutar talentos de forma mais eficiente, confiável e justa.
+3. **Instituições Certificadoras:** Como plataformas de cursos, olimpíadas educacionais e programas de aceleração, que desejam digitalizar e escalar a emissão de certificados.
+4. **Escolas (Públicas e Privadas):** Atuam como registradoras de mérito e facilitadoras de acesso a oportunidades para seus alunos.
+5. **Alunos:** Usuários finais, especialmente aqueles de regiões com menos visibilidade, que se beneficiam com portabilidade, reconhecimento e acesso a bolsas.
 
 ### 3.2. Modelo de Negócios e Monetização (Como vamos lidar com o dinheiro)
 A Edu Wallet adotará um modelo de negócios **Freemium Híbrido**, priorizando a ampla adoção e o impacto social, com fontes de receita para garantir a sustentabilidade e o crescimento.
@@ -105,13 +203,38 @@ A Edu Wallet adotará um modelo de negócios **Freemium Híbrido**, priorizando 
 **Fontes de Receita Secundárias/Estratégicas:**
 
 4.  **Consultoria e Projetos de Customização:** Para grandes redes de ensino ou consórcios que necessitem de integrações específicas ou customizações da plataforma.
-5.  **Grants, Editais e Financiamento de Impacto:** Busca ativa por recursos de fundações, governos e fundos de investimento de impacto.
+5. **Grants, Editais e Financiamento de Impacto:** Captação junto a organizações como Fundação Lemann, BID Lab, UNICEF, Google.org.  
+   **Referência:** [BID Lab - Financiamento para impacto](https://bidlab.org/), [Google.org Impact Challenge](https://impactchallenge.withgoogle.com/).
 
 **Gratuito para o Essencial (Foco na Inclusão):**
 * **Alunos:** Criação de carteira e recebimento/armazenamento de NFTs de mérito será **sempre gratuito**.
 * **Escolas Públicas (Pequeno/Médio Porte):** Funcionalidades básicas de gestão de alunos e visualização de méritos serão gratuitas ou fortemente subsidiadas.
 
+### **3.2.1 Estimativa de Receita Potencial**
+
+Com base nos segmentos de clientes e precificação estimada, é possível projetar um cenário de receita para o primeiro ano completo de operação:
+
+| **Fonte de Receita**                       | **Qtde. Estimada** | **Preço Unitário**     | **Receita Anual Estimada** |
+| ------------------------------------------ | ------------------ | ---------------------- | -------------------------- |
+| Secretarias de Educação (B2G)          | 5              | R\$ 100.000/ano    | R\$ 500.000            |
+| Instituições de Oportunidade (B2B/NGO) | 50             | R\$ 500/mês        | R\$ 300.000            |
+| Certificadoras (NFTs emitidos)         | 200.000 NFTs   | R\$ 0,10 por NFT   | R\$ 20.000             |
+| Consultorias/Customizações             | 5 projetos     | R\$ 20.000/projeto | R\$ 100.000            |
+| Receita Total Estimada                 |                    |                        | R\$ 920.000/ano        |
+
+Esses valores são conservadores e representam um ponto de partida para expansão futura.
+
 ### 3.3. Estrutura de Custos Estimada
+
+| Categoria                         | Descrição                                                                 |
+|----------------------------------|---------------------------------------------------------------------------|
+| Desenvolvimento e manutenção     | Equipe de engenharia, hospedagem, blockchain infra (RPCs, nodes, IPFS)   |
+| Operações e suporte              | Atendimento, onboarding, gestão de contas e compliance institucional      |
+| Marketing e Vendas               | CRM, eventos, campanhas institucionais, equipe comercial B2G e B2B        |
+| Jurídico e compliance            | LGPD, contratos, termos de uso e responsabilidade sobre dados             |
+| Custos de transação blockchain   | Taxas de minting, setup de contas, integração com zkVerify                |
+
+
 * **Desenvolvimento e Manutenção da Plataforma:** Principal custo, incluindo equipe técnica, infraestrutura em nuvem, licenças.
 * **Operações e Suporte:** Equipe para onboarding de instituições, suporte técnico e administrativo.
 * **Marketing e Vendas:** Para alcançar Secretarias de Educação, ONGs e outras instituições.
@@ -182,7 +305,7 @@ A Edu Wallet adotará um modelo de negócios **Freemium Híbrido**, priorizando 
 * **Thiago Volcati (Web3 Developer):** [GitHub](https://github.com/tvolcati)
 
 **Contato geral:** edu-wallet@nearx.com  
-**GitHub (para visão geral do projeto):** https://github.com/edu-wallet/nearx2025
+**GitHub (para visão geral do projeto):** https://github.com/MarcoPeixot/Near-Hack
 
 ## 7. Considerações Finais
 A Edu Wallet tem o potencial de não apenas criar um negócio sustentável, mas de gerar um impacto social profundo e duradouro no Brasil. Ao democratizar o acesso ao reconhecimento e às oportunidades, estamos investindo no futuro de milhares de jovens e na construção de uma sociedade mais justa e desenvolvida. Estamos buscando parceiros e investidores que compartilhem dessa visão e queiram se juntar a nós nesta jornada transformadora.
